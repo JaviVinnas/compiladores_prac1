@@ -1,20 +1,15 @@
 #include <stdio.h>
-
 int main()
 {
-    int i, j, k;
-    for (i = 0; i <= 9; i++)
+    char x[4];
+    int i;
+
+    for (i = 0; i < 4; ++i)
     {
-        for (j = 0; j <= 9; j++)
-        {
-            for (k = 0; k <= 9; k++)
-            {
-                if (i * 100 + j * 10 + k == i * j * k)
-                {
-                    printf("%d%d%d\n", i, j, k);
-                }
-            }
-        }
+        printf("&x[%d] = %p\n", i, &x[i]);
     }
+
+    printf("Address of array x: %p\n", x);
+
     return 0;
 }

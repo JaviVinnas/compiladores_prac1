@@ -2,33 +2,28 @@
 #include <stdlib.h>
 #include "sistema_de_entrada.h"
 
-typedef struct
+struct tipo_sistema_entrada
 {
     FILE *archivo;
     char *inicio, *delantero;
     char blok_a[BLOCK_SIZE + 1], blok_b[BLOCK_SIZE + 1];
     unsigned long bloks_cargados;
+};
 
-} sistema_de_entrada;
+typedef struct tipo_sistema_entrada *sistema_entrada;
 
-/**
- * Asigna a un bloque de los existentes un bloque de archivo
- * @param sist_entrada puntero a la estructura de entrada.
- * @param block_name bloque donde se almacenará el bloque de archivo. Puede ser [[a]] o bien [[b]]
- * @return 1 (true) si las cosas fueron bien, 0 (false) si no
- */
-unsigned siguienteBloqueDeArchivo(sistema_de_entrada *sist_entrada, char block_name)
+unsigned cargarSiguienteBloqueDeArchivo(sistema_entrada *S, char block_name)
 {
     if (block_name == 'a')
     {
-        fread(sist_entrada->blok_a, sizeof(char), BLOCK_SIZE, sist_entrada->archivo + sist_entrada->bloks_cargados);
-        sist_entrada->bloks_cargados++;
+        fread((*S)->blok_a, sizeof(char), BLOCK_SIZE, (*S)->archivo + (*S)->bloks_cargados);
+        (*S)->bloks_cargados++;
         return 1;
     }
     else if (block_name == 'b')
     {
-        fread(sist_entrada->blok_b, sizeof(char), BLOCK_SIZE, sist_entrada->archivo + sist_entrada->bloks_cargados);
-        sist_entrada->bloks_cargados++;
+        fread((*S)->blok_b, sizeof(char), BLOCK_SIZE, (*S)->archivo + (*S)->bloks_cargados);
+        (*S)->bloks_cargados++;
         return 1;
     }
     else
@@ -38,49 +33,71 @@ unsigned siguienteBloqueDeArchivo(sistema_de_entrada *sist_entrada, char block_n
     }
 }
 
-/**
- * Abre un archivo para lectura.
- * @param sist_entrada puntero a la estructura de entrada.
- * @param nombre_archivo Nombre del archivo a abrir.
- * @return 1 (true) si las cosas fueron bien, 0 (false) si no 
- * @see sistema_de_entrada_info
- */
-unsigned crear(sistema_de_entrada *sist_entrada, char *nombre_archivo)
+unsigned crear(sistema_entrada *S, char *nombre_archivo)
 {
     //creamos el puntero al archivo y lo traemos a memoria
-    sist_entrada->archivo = fopen(nombre_archivo, "r");
-    if (sist_entrada->archivo == NULL)
+    (*S)->archivo = fopen(nombre_archivo, "r");
+    if ((*S)->archivo == NULL)
     {
         return 0;
     }
     //como hasta ahora no llevamos leido ningún bloque inilizalizamos a cero
-    sist_entrada->bloks_cargados = 0;
+    (*S)->bloks_cargados = 0;
     //movemos los dos primeros bloques a @blok_a y @blok_b respectivamente
-    sist_entrada->blok_a[BLOCK_SIZE] = '\0';
-    sist_entrada->blok_b[BLOCK_SIZE] = '\0';
-    siguienteBloqueDeArchivo(sist_entrada, 'a');
-    siguienteBloqueDeArchivo(sist_entrada, 'b');
+    (*S)->blok_a[BLOCK_SIZE] = '\0';
+    (*S)->blok_b[BLOCK_SIZE] = '\0';
+    cargarSiguienteBloqueDeArchivo(S, 'a');
     //inicializamos @inicio y @delantero al inicio del primer bloque
-    sist_entrada->inicio = sist_entrada->blok_a;
-    sist_entrada->delantero = sist_entrada->blok_a;
+    (*S)->inicio = (*S)->blok_a;
+    (*S)->delantero = (*S)->blok_a;
 }
 
-/**
- * @return el caracter que toque leer
- */
-char pedirCaracter(sistema_de_entrada *sist_entrada)
+char pedirCaracter(sistema_entrada *S)
 {
     //extraemos el caracter que toque leer
-    char caracter = *sist_entrada->delantero;
-    //movemos el caracter de fin de línea una posición
-    sist_entrada->delantero++;
-    //si nos encontrasemos con el caracter EOF
-    if (caracter == EOF)
-    {
-        //vamos en qué bloque estamos
+    char caracter = (*(*S)->delantero);
+    if (caracter == '\0')
+    { //si ya es un caracter final antes de moverlo (fin de archivo) devolvemos '\0'
+        return caracter;
     }
+    //movemos el caracter de fin de línea una posición
+    (*S)->delantero++;
+    //si nos encontrasemos con el caracter EOF
+    if (caracter == '\0')
+    {
+        /*3 casos: 
+            1. final del bloque 1
+            2. final del bloque 2
+            3. final del archivo (no hacemos nada más que devolver '\0')
+        */
+        if ((*S)->delantero == (*S)->blok_a + BLOCK_SIZE)
+        { //llega al final del bloque a
+            if ((*S)->inicio < (*S)->blok_b || (*S)->inicio >= (*S)->blok_b + BLOCK_SIZE)
+            { //el inicio no está en el bloque b
+                (*S)->delantero = (*S)->blok_b;
+                cargarSiguienteBloqueDeArchivo(S, 'b');
+            }
+            else
+            {
+                fprintf(stderr, "Overflow de las memorias del sistema de entrada (lexema más largo que las dos memorias juntas)");
+            }
+        }
+        else if ((*S)->delantero == (*S)->blok_b + BLOCK_SIZE)
+        { //llega al final del bloque b
+            if ((*S)->inicio < (*S)->blok_a || (*S)->inicio >= (*S)->blok_a + BLOCK_SIZE)
+            { //el inicio no está en el bloque a
+                (*S)->delantero = (*S)->blok_a;
+                cargarSiguienteBloqueDeArchivo(S, 'a');
+            }
+            else
+            {
+                fprintf(stderr, "Overflow de las memorias del sistema de entrada (lexema más largo que las dos memorias juntas)");
+            }
+        }
+    }
+    return caracter;
 }
 
-void devolverCaracter(sistema_de_entrada *sist_entrada, char caracter) {}
+void devolverCaracter(sistema_entrada *S, char caracter) {}
 
-void lexemaEncontrado(sistema_de_entrada *sist_entrada){}
+void lexemaEncontrado(sistema_entrada *S) {}

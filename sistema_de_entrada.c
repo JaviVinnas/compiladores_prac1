@@ -12,6 +12,12 @@ struct tipo_sistema_entrada
 
 typedef struct tipo_sistema_entrada *sistema_entrada;
 
+/**
+ * Asigna a un bloque de los existentes un bloque de archivo
+ * @param sist_entrada puntero a la estructura de entrada.
+ * @param block_name bloque donde se almacenará el bloque de archivo. Puede ser [[a]] o bien [[b]]
+ * @return 1 (true) si las cosas fueron bien, 0 (false) si no
+ */
 unsigned cargarSiguienteBloqueDeArchivo(sistema_entrada *S, char block_name)
 {
     if (block_name == 'a')
@@ -55,7 +61,7 @@ unsigned crear(sistema_entrada *S, char *nombre_archivo)
 char pedirCaracter(sistema_entrada *S)
 {
     //extraemos el caracter que toque leer
-    char caracter = (*(*S)->delantero);
+    char caracter = *((*S)->delantero);
     if (caracter == '\0')
     { //si ya es un caracter final antes de moverlo (fin de archivo) devolvemos '\0'
         return caracter;

@@ -32,7 +32,7 @@ ABBRojoNegro inicializar(void)
             printf("Out of space!!!");
         NodoNulo->izq = NodoNulo->der = NodoNulo; //se tiene a si mismo como contenido (fin del arbol)
         NodoNulo->color = Negro; //siempre negro como la raiz
-        NodoNulo->contenido = crearTuplaLexemaId("trivial", 123); 
+        NodoNulo->contenido = crearTuplaLexemaId("NULO", 123); 
     }
 
     //se crea el nodo raiz del árbol

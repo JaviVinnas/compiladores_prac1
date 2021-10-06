@@ -1,7 +1,9 @@
 #ifndef RED_BLACK_ABB
 #define RED_BLACK_ABB
 
-typedef int ContenidoNodo;
+#include <TuplaLexemaId.h>
+
+typedef TuplaLexemaId ContenidoNodo; //es una arbol rojo-negro de punteros a tuplas lexema-id
 #define NegInfinity (-10000)
 
 struct NodoRojoNegro;

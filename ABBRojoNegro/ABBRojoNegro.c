@@ -32,14 +32,14 @@ ABBRojoNegro inicializar(void)
             printf("Out of space!!!");
         NodoNulo->izq = NodoNulo->der = NodoNulo; //se tiene a si mismo como contenido (fin del arbol)
         NodoNulo->color = Negro; //siempre negro como la raiz
-        NodoNulo->contenido = crearTuplaLexemaId("NULO", 123); 
+        NodoNulo->contenido = crearTuplaLexemaId(NULL, 123); 
     }
 
     //se crea el nodo raiz del árbol
     T = malloc(sizeof(struct NodoRojoNegro));
     if (T == NULL)
         printf("Out of space!!!");
-    T->contenido = crearTuplaLexemaId("trivial", NegInfinity); 
+    T->contenido = crearTuplaLexemaId("    ", NegInfinity); 
     T->izq = T->der = NodoNulo;
     T->color = Negro; //raiz siempre negra
 
@@ -96,9 +96,9 @@ Posicion buscar(ContenidoNodo X, ABBRojoNegro T)
     if (T == NodoNulo)
         return NodoNulo;
     //buscamos y ordenamos por el lexema
-    if (compareTuplas(X, T->contenido) < 0) //si es menor
+    if (compareTuplas(X, T->contenido) > 0) //si es menor
         return buscar(X, T->izq);
-    else if (compareTuplas(X, T->contenido) > 0) //si es mayor
+    else if (compareTuplas(X, T->contenido) < 0) //si es mayor
         return buscar(X, T->der);
     else //si son iguales
         return T;
@@ -160,10 +160,10 @@ static Posicion SingleRotateWithRight(Posicion K1)
 
 static Posicion Rotate(ContenidoNodo Item, Posicion Parent)
 {
-    if (compareTuplas(Item, Parent->contenido) < 0)
-        return Parent->izq = compareTuplas(Item, Parent->izq->contenido) < 0 ? SingleRotateWithLeft(Parent->izq) : SingleRotateWithRight(Parent->izq);
+    if (compareTuplas(Item, Parent->contenido) > 0)
+        return Parent->izq = compareTuplas(Item, Parent->izq->contenido) > 0 ? SingleRotateWithLeft(Parent->izq) : SingleRotateWithRight(Parent->izq);
     else
-        return Parent->der = compareTuplas(Item, Parent->der->contenido) ? SingleRotateWithLeft(Parent->der) : SingleRotateWithRight(Parent->der);
+        return Parent->der = compareTuplas(Item, Parent->der->contenido) > 0 ? SingleRotateWithLeft(Parent->der) : SingleRotateWithRight(Parent->der);
 }
 
 static Posicion X, P, GP, GGP;
@@ -177,7 +177,7 @@ static void HandleReorient(ContenidoNodo Item, ABBRojoNegro T)
     if (P->color == Rojo) /* Have to rotate */
     {
         GP->color = Rojo;
-        if ((compareTuplas(Item, GP->contenido)<0) != (compareTuplas(Item, P->contenido)<0))
+        if ((compareTuplas(Item, GP->contenido)>0) != (compareTuplas(Item, P->contenido)>0))
             P = Rotate(Item, GP); /* Start double rotate */
         X = Rotate(Item, GGP);
         X->color = Negro;
@@ -194,7 +194,7 @@ ABBRojoNegro insertar(ContenidoNodo Item, ABBRojoNegro T)
         GGP = GP;
         GP = P;
         P = X;
-        if (compareTuplas(Item , X->contenido) < 0)
+        if (compareTuplas(Item , X->contenido) > 0)
             X = X->izq;
         else
             X = X->der;
@@ -211,7 +211,7 @@ ABBRojoNegro insertar(ContenidoNodo Item, ABBRojoNegro T)
     X->contenido = Item;
     X->izq = X->der = NodoNulo;
 
-    if (compareTuplas(Item, P->contenido) < 0) /* Attach to its parent */
+    if (compareTuplas(Item, P->contenido) < 0) //si la tupla hija es menor que la tupla padre va a la izquierda (nunca cuando insertamos la primera vez)
         P->izq = X;
     else
         P->der = X;

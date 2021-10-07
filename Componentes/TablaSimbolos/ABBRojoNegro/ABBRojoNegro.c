@@ -21,7 +21,7 @@ struct NodoRojoNegro
 static Posicion NodoNulo = NULL; //necesita inicialización -> nodo que actua de nulo y que estará en las hojas
 
 /* Initialization procedure */
-ABBRojoNegro inicializar(void)
+ABBRojoNegro crear(void)
 {
     ABBRojoNegro T;
 

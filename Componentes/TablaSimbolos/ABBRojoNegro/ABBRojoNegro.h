@@ -14,7 +14,7 @@ ABBRojoNegro vaciar(ABBRojoNegro T);
 Posicion buscar(ContenidoNodo X, ABBRojoNegro T);
 Posicion buscar_minimo(ABBRojoNegro T);
 Posicion buscar_maximo(ABBRojoNegro T);
-ABBRojoNegro inicializar(void);
+ABBRojoNegro crear(void);
 ABBRojoNegro insertar(ContenidoNodo X, ABBRojoNegro T);
 ABBRojoNegro eliminar(ContenidoNodo X, ABBRojoNegro T);
 ContenidoNodo obtener_contenido(Posicion P);

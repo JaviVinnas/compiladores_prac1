@@ -2,9 +2,32 @@
 #OBJETOS -> los .c, pero cambiándoles la extensión por .o con la ruta desde donde está el makefile (la raíz del proyecto)
 #FUENTES -> los .c con la ruta desde donde está el makefile (la raíz del proyecto)
 
-CFLAGS=-g -Wall -I./ABBRojoNegro -I./TuplaLexemaId
-OBJETOS=./Main/main.o ./ABBRojoNegro/ABBRojoNegro.o ./TuplaLexemaId/TuplaLexemaId.o
-FUENTES=./Main/main.c ./ABBRojoNegro/ABBRojoNegro.c ./TuplaLexemaId/TuplaLexemaId.c
+CFLAGS=-g -Wall \
+-I./ArchivosComunes \
+-I./ArchivosComunes/TuplaLexemaId \
+-I./Componentes/AnalizadorLexico \
+-I./Componentes/AnalizadorSintactico \
+-I./Componentes/SistemaEntrada \
+-I./Componentes/TablaSimbolos \
+-I./Componentes/TablaSimbolos/ABBRojoNegro
+
+OBJETOS=\
+./ArchivosComunes/TuplaLexemaId.o \
+./Componentes/AnalizadorLexico/AnalizadorLexico.o \
+./Componentes/AnalizadorSintactico/AnalizadorSintactico.o \
+./Componentes/SistemaEntrada/SistemaEntrada.o \
+./Componentes/TablaSimbolos/TablaSimbolos.o \
+./Componentes/TablaSimbolos/ABBRojoNegro/ABBRojoNegro.o \
+./Main/Main.o
+
+FUENTES=\
+./ArchivosComunes/TuplaLexemaId.c \
+./Componentes/AnalizadorLexico/AnalizadorLexico.c \
+./Componentes/AnalizadorSintactico/AnalizadorSintactico.c \
+./Componentes/SistemaEntrada/SistemaEntrada.c \
+./Componentes/TablaSimbolos/TablaSimbolos.c \
+./Componentes/TablaSimbolos/ABBRojoNegro/ABBRojoNegro.c \
+./Main/Main.c
 
 ejecutable: $(OBJETOS)
 	gcc -Wall -g $(OBJETOS) -o ejecutable

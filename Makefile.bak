@@ -1,13 +1,13 @@
 #CFLAGS -> donde directorios del proyecto donde haya ficheros.h
-#OBJETOS -> los .c, pero cambiándoles la extensión por .o con la ruta desde donde está el makefile
-#FUENTES -> los .c con la ruta desde donde está el makefile
+#OBJETOS -> los .c, pero cambiándoles la extensión por .o con la ruta desde donde está el makefile (la raíz del proyecto)
+#FUENTES -> los .c con la ruta desde donde está el makefile (la raíz del proyecto)
 
-CFLAGS=-g -I./ABBRojoNegro -I./TuplaLexemaId
+CFLAGS=-g -Wall -I./ABBRojoNegro -I./TuplaLexemaId
 OBJETOS=./Main/main.o ./ABBRojoNegro/ABBRojoNegro.o ./TuplaLexemaId/TuplaLexemaId.o
-FUENTES=./Main/main.c ./ABBRojoNegro/ABBRojoNegro.c ./TuplaLexemaId/TuplaLexemaId.c 
+FUENTES=./Main/main.c ./ABBRojoNegro/ABBRojoNegro.c ./TuplaLexemaId/TuplaLexemaId.c
 
 ejecutable: $(OBJETOS)
-	gcc -g $(OBJETOS) -o ejecutable
+	gcc -Wall -g $(OBJETOS) -o ejecutable
 
 depend:
 	makedepend $(CFLAGS) $(FUENTES)

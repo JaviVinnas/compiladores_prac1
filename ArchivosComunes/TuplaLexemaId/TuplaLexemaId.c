@@ -10,7 +10,7 @@ struct TipoTuplaLexemaId {
     IdentificadorNumerico id;
 };
 
-TuplaLexemaId crearTuplaLexemaId(Lexema lexema, IdentificadorNumerico id) {
+TuplaLexemaId crearTupla(Lexema lexema, IdentificadorNumerico id) {
     TuplaLexemaId tupla = malloc(sizeof(struct TipoTuplaLexemaId));
     //strcpy(tupla->lexema, lexema);
     tupla->lexema = lexema;
@@ -30,10 +30,10 @@ int compareTuplas(TuplaLexemaId T1, TuplaLexemaId T2){
     return strcmp(T1->lexema, T2->lexema);
 }
 
-void printTuplaLexemaId(TuplaLexemaId T){
-    printf("T<%s, %d>", getTuplaLexema(T), getTuplaId(T));
+void printTupla(TuplaLexemaId T){
+    printf("<%s,%d>\n", getTuplaLexema(T), getTuplaId(T));
 }
 
-void borrarTuplaLexemaId(TuplaLexemaId T){
+void borrarTupla(TuplaLexemaId T){
     free(T);
 }

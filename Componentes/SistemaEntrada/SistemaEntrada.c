@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "sistema_de_entrada.h"
+#include "SistemaEntrada.h"
 
 typedef enum NombreBloque
 {
@@ -31,14 +31,13 @@ void cargarSiguienteBloqueDeArchivo(SistemaEntrada S, NombreBloque nombreBloque)
     }
     else if (nombreBloque == BLOQUE_B)
     {
-        fread(S->blokA, sizeof(char), BLOCK_SIZE, S->archivo + S->bloksCargados);
+        fread(S->blokB, sizeof(char), BLOCK_SIZE, S->archivo + S->bloksCargados);
         S->bloksCargados++;
-        return 1;
     }
     S->bloksCargados++;
 }
 
-SistemaEntrada crear(char *nombre_archivo)
+SistemaEntrada crearSistemaEntrada(char *nombre_archivo)
 {
     SistemaEntrada S = malloc(sizeof(struct TipoSistemaEntrada));
     //creamos el puntero al archivo y lo traemos a memoria
@@ -53,6 +52,7 @@ SistemaEntrada crear(char *nombre_archivo)
     cargarSiguienteBloqueDeArchivo(S, BLOQUE_A);
     //inicializamos @inicio y @delantero al inicio del primer bloque
     S->inicio = S->delantero = S->blokA;
+    return S;
 }
 
 char pedirCaracter(SistemaEntrada S)
@@ -77,7 +77,7 @@ char pedirCaracter(SistemaEntrada S)
         { //llega al final del bloque a
             if (S->inicio < S->blokB || S->inicio >= S->blokB + BLOCK_SIZE)
             { //el inicio no está en el bloque b
-                *S->delantero = S->blokB;
+                S->delantero = S->blokB;
                 cargarSiguienteBloqueDeArchivo(S, BLOQUE_B);
             }
             else
@@ -104,3 +104,9 @@ char pedirCaracter(SistemaEntrada S)
 void devolverCaracter(SistemaEntrada S) {}
 
 char *lexemaEncontrado(SistemaEntrada S) {return NULL;}
+
+void destruirSistemaEntrada(SistemaEntrada S)
+{
+    fclose(S->archivo);
+    free(S);
+}

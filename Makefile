@@ -2,17 +2,18 @@
 #OBJETOS -> los .c, pero cambiándoles la extensión por .o con la ruta desde donde está el makefile (la raíz del proyecto)
 #FUENTES -> los .c con la ruta desde donde está el makefile (la raíz del proyecto)
 
-CFLAGS=-g -Wall \
+CFLAGS=-g \
 -I./ArchivosComunes \
 -I./ArchivosComunes/TuplaLexemaId \
 -I./Componentes/AnalizadorLexico \
 -I./Componentes/AnalizadorSintactico \
 -I./Componentes/SistemaEntrada \
 -I./Componentes/TablaSimbolos \
--I./Componentes/TablaSimbolos/ABBRojoNegro
+-I./Componentes/TablaSimbolos/ABBRojoNegro \
+-I./Main
 
 OBJETOS=\
-./ArchivosComunes/TuplaLexemaId.o \
+./ArchivosComunes/TuplaLexemaId/TuplaLexemaId.o \
 ./Componentes/AnalizadorLexico/AnalizadorLexico.o \
 ./Componentes/AnalizadorSintactico/AnalizadorSintactico.o \
 ./Componentes/SistemaEntrada/SistemaEntrada.o \
@@ -21,7 +22,7 @@ OBJETOS=\
 ./Main/Main.o
 
 FUENTES=\
-./ArchivosComunes/TuplaLexemaId.c \
+./ArchivosComunes/TuplaLexemaId/TuplaLexemaId.c \
 ./Componentes/AnalizadorLexico/AnalizadorLexico.c \
 ./Componentes/AnalizadorSintactico/AnalizadorSintactico.c \
 ./Componentes/SistemaEntrada/SistemaEntrada.c \
@@ -43,12 +44,24 @@ all:
 #----------------------------------------------------------------------------------------------------------------------
 # DO NOT DELETE
 
-./Main/main.o: /usr/include/stdio.h /usr/include/stdlib.h
-./Main/main.o: ./ABBRojoNegro/ABBRojoNegro.h ./TuplaLexemaId/TuplaLexemaId.h
-./ABBRojoNegro/ABBRojoNegro.o: ./ABBRojoNegro/ABBRojoNegro.h
-./ABBRojoNegro/ABBRojoNegro.o: ./TuplaLexemaId/TuplaLexemaId.h
-./ABBRojoNegro/ABBRojoNegro.o: /usr/include/stdio.h /usr/include/stdlib.h
-./ABBRojoNegro/ABBRojoNegro.o: /usr/include/string.h
-./TuplaLexemaId/TuplaLexemaId.o: ./TuplaLexemaId/TuplaLexemaId.h
-./TuplaLexemaId/TuplaLexemaId.o: /usr/include/string.h /usr/include/stdio.h
-./TuplaLexemaId/TuplaLexemaId.o: /usr/include/stdlib.h
+./ArchivosComunes/TuplaLexemaId/TuplaLexemaId.o: ./ArchivosComunes/TuplaLexemaId/TuplaLexemaId.h
+./ArchivosComunes/TuplaLexemaId/TuplaLexemaId.o: /usr/include/string.h
+./ArchivosComunes/TuplaLexemaId/TuplaLexemaId.o: /usr/include/stdio.h
+./ArchivosComunes/TuplaLexemaId/TuplaLexemaId.o: /usr/include/stdlib.h
+./Componentes/SistemaEntrada/SistemaEntrada.o: /usr/include/stdio.h
+./Componentes/SistemaEntrada/SistemaEntrada.o: /usr/include/stdlib.h
+./Componentes/SistemaEntrada/SistemaEntrada.o: ./Componentes/SistemaEntrada/SistemaEntrada.h
+./Componentes/TablaSimbolos/TablaSimbolos.o: ./Componentes/TablaSimbolos/TablaSimbolos.h
+./Componentes/TablaSimbolos/TablaSimbolos.o: ./Componentes/TablaSimbolos/ABBRojoNegro/ABBRojoNegro.h
+./Componentes/TablaSimbolos/TablaSimbolos.o: ./ArchivosComunes/TuplaLexemaId/TuplaLexemaId.h
+./Componentes/TablaSimbolos/TablaSimbolos.o: ./ArchivosComunes/Definiciones.h
+./Componentes/TablaSimbolos/TablaSimbolos.o: /usr/include/stdio.h
+./Componentes/TablaSimbolos/TablaSimbolos.o: /usr/include/stdlib.h
+./Componentes/TablaSimbolos/ABBRojoNegro/ABBRojoNegro.o: ./Componentes/TablaSimbolos/ABBRojoNegro/ABBRojoNegro.h
+./Componentes/TablaSimbolos/ABBRojoNegro/ABBRojoNegro.o: ./ArchivosComunes/TuplaLexemaId/TuplaLexemaId.h
+./Componentes/TablaSimbolos/ABBRojoNegro/ABBRojoNegro.o: /usr/include/stdio.h
+./Componentes/TablaSimbolos/ABBRojoNegro/ABBRojoNegro.o: /usr/include/stdlib.h
+./Componentes/TablaSimbolos/ABBRojoNegro/ABBRojoNegro.o: /usr/include/string.h
+./Main/Main.o: /usr/include/stdio.h
+./Main/Main.o: ./Componentes/SistemaEntrada/SistemaEntrada.h
+./Main/Main.o: ./Componentes/TablaSimbolos/TablaSimbolos.h

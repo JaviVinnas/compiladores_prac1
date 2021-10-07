@@ -21,7 +21,7 @@ struct NodoRojoNegro
 static Posicion NodoNulo = NULL; //necesita inicialización -> nodo que actua de nulo y que estará en las hojas
 
 /* Initialization procedure */
-ABBRojoNegro crear(void)
+ABBRojoNegro crearABBRojoNegro(void)
 {
     ABBRojoNegro T;
 
@@ -32,14 +32,14 @@ ABBRojoNegro crear(void)
             printf("Out of space!!!");
         NodoNulo->izq = NodoNulo->der = NodoNulo; //se tiene a si mismo como contenido (fin del arbol)
         NodoNulo->color = Negro; //siempre negro como la raiz
-        NodoNulo->contenido = crearTuplaLexemaId(NULL, 123);
+        NodoNulo->contenido = crearTupla(NULL, 123);
     }
 
     //se crea el nodo raiz del árbol
     T = malloc(sizeof(struct NodoRojoNegro));
     if (T == NULL)
         printf("Out of space!!!");
-    T->contenido = crearTuplaLexemaId("    ", NegInfinity);
+    T->contenido = crearTupla("    ", NegInfinity);
     T->izq = T->der = NodoNulo;
     T->color = Negro; //raiz siempre negra
 
@@ -50,7 +50,7 @@ ABBRojoNegro crear(void)
 
 void Output(ContenidoNodo contenido)
 {
-    printTuplaLexemaId(contenido);
+    printTupla(contenido);
 }
 
 /* Print the tree, watch out for NodoNulo, */
@@ -67,7 +67,7 @@ static void DoPrint(ABBRojoNegro T)
     }
 }
 
-void imprimir_arbol(ABBRojoNegro T)
+void imprimirABBRojoNegro(ABBRojoNegro T)
 {
     DoPrint(T->der);
 }
@@ -85,7 +85,7 @@ static ABBRojoNegro MakeEmptyRec(ABBRojoNegro T)
     return NodoNulo;
 }
 
-ABBRojoNegro vaciar(ABBRojoNegro T)
+ABBRojoNegro vaciarABBRojoNegro(ABBRojoNegro T)
 {
     T->der = MakeEmptyRec(T->der);
     return T;
@@ -185,7 +185,7 @@ static void HandleReorient(ContenidoNodo Item, ABBRojoNegro T)
     T->der->color = Negro; /* Make root black */
 }
 
-ABBRojoNegro insertar(ContenidoNodo Item, ABBRojoNegro T)
+ABBRojoNegro insertarABBRojoNegro(ContenidoNodo Item, ABBRojoNegro T)
 {
     X = P = GP = T;
     NodoNulo->contenido = Item;

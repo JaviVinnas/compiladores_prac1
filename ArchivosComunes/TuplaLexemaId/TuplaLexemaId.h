@@ -7,12 +7,12 @@ typedef int IdentificadorNumerico;
 struct TipoTuplaLexemaId;
 typedef struct TipoTuplaLexemaId *TuplaLexemaId;
 
-TuplaLexemaId crearTuplaLexemaId(Lexema lexema, IdentificadorNumerico id);
+TuplaLexemaId crearTupla(Lexema lexema, IdentificadorNumerico id);
 Lexema getTuplaLexema(TuplaLexemaId T);
 IdentificadorNumerico getTuplaId(TuplaLexemaId T);
 //{{si <0 [T1 < T2]}} {{si >0 [T1 > T2]}}  {{si == 0 [T1 == T2]}}
 int compareTuplas(TuplaLexemaId T1, TuplaLexemaId T2);
-void printTuplaLexemaId(TuplaLexemaId T);
-void borrarTuplaLexemaId(TuplaLexemaId T);
+void printTupla(TuplaLexemaId T);
+void borrarTupla(TuplaLexemaId T);
 
 #endif //TUPLA_LEXEMA_ID_H

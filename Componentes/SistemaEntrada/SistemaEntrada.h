@@ -11,7 +11,7 @@ char siguienteCaracter(SistemaEntrada S);
 //retorcede el puntero delantero una posición
 void devolverCaracter(SistemaEntrada S);
 //devuelve los caracteres que estén entre los pinteros inicio y delante
-char *devolverLexema(SistemaEntrada S);
+char *lexemaEncontrado(SistemaEntrada S);
 //libera la memoria del sistema de entrada si hubiera
 void destruirSistemaEntrada(SistemaEntrada S);
 

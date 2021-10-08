@@ -2,8 +2,10 @@
 #include <ABBRojoNegro.h>
 #include <Definiciones.h>
 #include <TuplaLexemaId.h>
+#include <Utils.h>
 #include <stdio.h>
 #include <stdlib.h>
+
 
 struct TipoTablaSimbolos{
     ABBRojoNegro almacenamiento;
@@ -51,10 +53,9 @@ TablaSimbolos crearTablaSimbolos(){
 }
 
 void imprimirTablaSimbolos(TablaSimbolos T){
-    printf("------------------\n");
     printf("Tabla de símbolos:\n");
     imprimirABBRojoNegro(T->almacenamiento);
-    printf("------------------\n");
+    printSeparator();
 }
 
 void destruirTablaSimbolos(TablaSimbolos T){

@@ -1,4 +1,4 @@
-#include "TuplaLexemaId.h"
+#include <TuplaLexemaId.h>
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -12,7 +12,6 @@ struct TipoTuplaLexemaId {
 
 TuplaLexemaId crearTupla(Lexema lexema, IdentificadorNumerico id) {
     TuplaLexemaId tupla = malloc(sizeof(struct TipoTuplaLexemaId));
-    //strcpy(tupla->lexema, lexema);
     tupla->lexema = lexema;
     tupla->id = id;
     return tupla;
@@ -34,6 +33,6 @@ void printTupla(TuplaLexemaId T){
     printf("<%s,%d>\n", getTuplaLexema(T), getTuplaId(T));
 }
 
-void borrarTupla(TuplaLexemaId T){
+void destruirTupla(TuplaLexemaId T){
     free(T);
 }

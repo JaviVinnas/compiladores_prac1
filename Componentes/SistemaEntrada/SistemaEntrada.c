@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "SistemaEntrada.h"
+#include <SistemaEntrada.h>
 
 typedef enum NombreBloque
 {
@@ -55,7 +55,7 @@ SistemaEntrada crearSistemaEntrada(char *nombre_archivo)
     return S;
 }
 
-char pedirCaracter(SistemaEntrada S)
+char siguienteCaracter(SistemaEntrada S)
 {
     //extraemos el caracter que toque leer
     char caracter = *(S->delantero);

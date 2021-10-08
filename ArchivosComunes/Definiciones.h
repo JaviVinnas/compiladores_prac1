@@ -36,5 +36,8 @@
 #define WHILE 331
 #define WITH 332
 #define YIELD 333
+//definiciones otros componentes léxicos en python de utilidad
+#define IDENTIFICADOR 334
+#define END_OF_FILE 335
 
 #endif //DEFINICIONES_H

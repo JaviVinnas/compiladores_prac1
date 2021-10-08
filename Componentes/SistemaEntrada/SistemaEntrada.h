@@ -7,7 +7,7 @@ struct TipoSistemaEntrada;
 typedef struct TipoSistemaEntrada *SistemaEntrada;
 SistemaEntrada crearSistemaEntrada( char *nombre_archivo);
 //retorna el caracter que esté en el puntero delantero y lo avanza una posición
-char pedirCaracter(SistemaEntrada S);
+char siguienteCaracter(SistemaEntrada S);
 //retorcede el puntero delantero una posición
 void devolverCaracter(SistemaEntrada S);
 //devuelve los caracteres que estén entre los pinteros inicio y delante

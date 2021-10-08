@@ -29,7 +29,7 @@ struct TipoAnalizadorLexico
 //avanza el puntero delantero hasta que llegamos a un retorno de carro
 void ommitUntilEndOfLine(SistemaEntrada entrada){
     char c;
-    while((c = getChar(entrada)) != '\n'){
+    while((c = siguienteCaracter(entrada)) != '\n'){
         if(c == EOF){
             return;
         } else {

@@ -10,10 +10,13 @@ typedef struct TipoSistemaEntrada *SistemaEntrada;
 SistemaEntrada crearSistemaEntrada( char *nombre_archivo);
 //retorna el caracter que esté en el puntero delantero y lo avanza una posición si se pudiese
 char siguienteCaracter(SistemaEntrada S);
-//retorcede el puntero delantero una posición
+//de vuelve el caracter consumido
 void devolverCaracter(SistemaEntrada S);
-//devuelve una cadena de texto con los caracteres que estén entre los punteros inicio y delante (incluidos)
+//efectua los cambios internos que tienen lugar cuando se reconoce un lexema y devuelve una cadena con el lexema reconocido
 char *lexemaEncontrado(SistemaEntrada S);
+//efectua los cambios internos que tienen lugar cuando se reconoce un lexema pero no construye una cadena que saca como output
+//útil cuando no nos interese el lexema pero no interesa el output
+void lexemaEncontradoSinOutput(SistemaEntrada S);
 //libera la memoria del sistema de entrada si hubiera
 void destruirSistemaEntrada(SistemaEntrada S);
 

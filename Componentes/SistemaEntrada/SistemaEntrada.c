@@ -3,6 +3,9 @@
 #include <SistemaEntrada.h>
 #include <string.h>
 
+//----------------------------------------------------------------------------------------------------------------------
+//TIPOS DE DATOS
+
 typedef enum NombreBloque
 {
     NingunBloque,
@@ -12,8 +15,8 @@ typedef enum NombreBloque
 
 typedef enum NombrePunteroLectura
 {
-    Inicio,
-    Delantero,
+    PunteroInicio,
+    PunteroDelantero,
 } NombrePunteroLectura;
 
 struct TipoSistemaEntrada
@@ -29,16 +32,17 @@ struct TipoSistemaEntrada
     unsigned bloquearCargaBloque : 1;
 };
 
+//----------------------------------------------------------------------------------------------------------------------
 //FUNCIONES PRIVADAS
 
 //traduce de un nombre de puntero de lectura al puntero como tal. Devuelve null si no lo encuentra
 char *nombreToPunteroLectura(SistemaEntrada S, NombrePunteroLectura nombrePunteroLectura)
 {
-    if (nombrePunteroLectura == Inicio)
+    if (nombrePunteroLectura == PunteroInicio)
     {
         return S->inicio;
     }
-    else if (nombrePunteroLectura == Delantero)
+    else if (nombrePunteroLectura == PunteroDelantero)
     {
         return S->delantero;
     }
@@ -84,6 +88,7 @@ NombreBloque getBloqueDondeEsta(SistemaEntrada S, NombrePunteroLectura nombrePun
     else if (punteroLectura >= S->blokB && punteroLectura <= S->blokB + BLOCK_SIZE)
         return BloqueB;
     else
+        //CORREGIR_ERROR: gestionar error en errores.h
         return NingunBloque;
 }
 
@@ -111,29 +116,47 @@ NombreBloque getBloqueOpuesto(NombreBloque nombreBloque)
 }
 
 /**
- * Devuelve una cadena con los caracteres que se encuentren entre dos punteros INCLUIDO EL CONTENIDO DE ESTOS.
+ * Devuelve una nueva cadena de texto con los caracteres que se encuentren entre dos punteros INCLUIDO EL CONTENIDO DE ESTOS.
  * Se presupone que apuntan al mismo array
  */
-char *getStringEntreDosPunteros(char *punteroMenor, char *punteroMayor)
+char *crearStringEntreDosPunteros(char *punteroMenor, char *punteroMayor)
 {
     char *string = malloc(sizeof(char) * (punteroMayor - punteroMenor + 2)); //+1 por si los punteros son iguales +1 para el caracter de fin de cadena
-    for (size_t i = 0; i < punteroMayor - punteroMenor; i++) //de cero hasta el puntero mayor
+    for (size_t i = 0; i < punteroMayor - punteroMenor; i++)                 //de cero hasta el puntero mayor
         string[i] = punteroMenor[i];
     string[punteroMayor - punteroMenor + 1] = '\0';
     return string;
 }
 
 /**
- * Devuelve una cadena con los caracteres que entre el puntero que se le pase por argumento y el final del bloque donde esté.
- * Si el (*) marca el elemnto apuntado por el puntero, para el bloque [a|b|c|d*|e|f|g|\0] devolvería la cadena "defg" bien formada (con el caracter de fin de cadena)
+ * Crea el lexema que correspondería al estado interno del sistema de entrada SIN MODIFICAR ESTE ESTADO
  */
-char *getLexemaParcialPuntero(SistemaEntrada S, NombrePunteroLectura nombrePunteroLectura)
-{
-    char *punteroLectura = nombreToPunteroLectura(S, nombrePunteroLectura);
-    char *bloqueDondeEsta = nombreToBloque(S, getBloqueDondeEsta(S, nombrePunteroLectura));
-    char *lexema = malloc(sizeof(char) * (BLOCK_SIZE + 1));
+char *crearLexemaEncontrado(SistemaEntrada S){
+    //obtenemos los bloques donde están los punteros de lectura
+    NombreBloque nombreBloqueInicio = getBloqueDondeEsta(S, PunteroInicio);
+    NombreBloque nombreBloqueDelantero = getBloqueDondeEsta(S, PunteroDelantero);
+    if (nombreBloqueInicio == nombreBloqueDelantero)
+    { //1º caso => "inicio" y "delante" están en el mismo bloque => situación normal
+        return crearStringEntreDosPunteros(S->inicio, S->delantero);
+    }
+    else
+    { //2º caso => "inicio" y "delante" están en bloques distintos => el lexema está entre dos bloques (en dos partes)
+        //PARTE 1 => desde "inicio" hasta el final del bloque en el que esté (SIN EL CENTINELA)
+        char *parte1 = crearStringEntreDosPunteros(S->inicio, nombreToBloque(S, nombreBloqueInicio) + BLOCK_SIZE - 1);
+        //PARTE 2 => desde el comienzo del bloque de "delante" hasta donde esté "delante" como tal
+        char *parte2 = crearStringEntreDosPunteros(nombreToBloque(S, nombreBloqueDelantero), S->delantero);
+        //construimos la cadena destino y la rellenamos con la concatenación las partes
+        char *lexema = malloc(sizeof(char) * (strlen(parte1) + strlen(parte2) + 1));
+        strcpy(lexema, parte1);
+        strcat(lexema, parte2);
+        //3. liberamos la memoria de las partes
+        free(parte1);
+        free(parte2);
+        return lexema;
+    }
 }
 
+//----------------------------------------------------------------------------------------------------------------------
 //FUNCIONES PUBLICAS
 
 SistemaEntrada crearSistemaEntrada(char *nombre_archivo)
@@ -144,42 +167,40 @@ SistemaEntrada crearSistemaEntrada(char *nombre_archivo)
     if (S->archivo == NULL)
         //CORREGIR_ERROR: gestionar error en errores.
         return NULL;
-    //como hasta ahora no llevamos leido ningún bloque inilizalizamos a cero
+    //como no hemos leido ningún bloque todavía lo inilizalizamos a cero
     S->bloksCargados = 0;
     //desbloqueamos la carga de bloque
     S->bloquearCargaBloque = 0;
-    //movemos los dos primeros bloques a @blok_a y @blok_b respectivamente
+    //movemos los dos primeros bloques a "blokA" y "blokB" respectivamente
     S->blokA[BLOCK_SIZE] = '\0';
     S->blokB[BLOCK_SIZE] = '\0';
     cargarSiguienteBloqueDeArchivo(S, BloqueA);
-    //inicializamos @inicio y @delantero al inicio del primer bloque
+    //hacemos que "inicio" y "delantero" apunten a la primera posición del primer bloque
     S->inicio = S->delantero = S->blokA;
     return S;
 }
 
 char siguienteCaracter(SistemaEntrada S)
 {
-    //extraemos el caracter que toque leer
-    char caracter = *(S->delantero);
-    if (caracter == '\0')
-        return caracter; //devolvemos el caracter antes de avanzar el puntero
+    if (*(S->delantero) == '\0')
+        return *(S->delantero); //devolvemos el caracter antes de avanzar el puntero
     //si no es un centinela, avanzamos el puntero
     S->delantero++;
 
     //GESTIONAMOS LO QUE PASA SI LLEGAMOS A UN CENTINELA (si llegamos al final del archivo no hacemos nada)
 
-    if (estaAlFinalDeUnBloque(S, Delantero) != NingunBloque)
+    if (estaAlFinalDeUnBloque(S, PunteroDelantero) != NingunBloque)
     { //estamos en un centinela
-        if (getBloqueDondeEsta(S, Inicio) == getBloqueDondeEsta(S, Delantero) != NingunBloque)
+        if (getBloqueDondeEsta(S, PunteroInicio) == getBloqueDondeEsta(S, PunteroDelantero))
         { //los dos punteros de lectura están en el mismo bloque
-            //pasamos "delantero" al comienzo del bloque siguiente
-            S->delantero = nombreToBloque(S, getBloqueOpuesto(getBloqueDondeEsta(S, Delantero)));
-            //si tuvieramos la fag que bloquea la carga de bloques activa la desactivamos para la siguiente
+            //1. pasamos "delantero" al comienzo del otro bloque de memoria
+            S->delantero = nombreToBloque(S, getBloqueOpuesto(getBloqueDondeEsta(S, PunteroDelantero)));
+            //2. si tuvieramos la flag que bloquea la carga de bloques activa, la desactivamos para la siguiente vez
             if (S->bloquearCargaBloque)
                 S->bloquearCargaBloque = 0;
             else
-                //si no cargamos el siguiente bloque para que lo lea "delantero"
-                cargarSiguienteBloqueDeArchivo(S, getBloqueDondeEsta(S, Delantero));
+                //si no, cargamos el siguiente bloque para que lo lea "delantero"
+                cargarSiguienteBloqueDeArchivo(S, getBloqueDondeEsta(S, PunteroDelantero));
         }
         else
         {
@@ -187,35 +208,39 @@ char siguienteCaracter(SistemaEntrada S)
             fprintf(stderr, "Overflow de las memorias del sistema de entrada (lexema más largo que las dos memorias juntas)");
         }
     }
-    return caracter;
+    return *(S->delantero);
 }
 
-void devolverCaracter(SistemaEntrada S) {}
+void devolverCaracter(SistemaEntrada S)
+{
+    if (S->delantero != S->inicio)
+    {//si los punteros de lectura apuntan a posiciones diferentes
+        if (S->delantero == nombreToBloque(S, getBloqueDondeEsta(S, PunteroDelantero)))
+        { //"delantero" está en la primera posición de su bloque (del bloque donde está)
+            //1. Movemos delantero al final del otro bloque de memoria (el bloque donde no está)
+            S->delantero = nombreToBloque(S, getBloqueOpuesto(getBloqueDondeEsta(S, PunteroDelantero))) + BLOCK_SIZE - 1;
+            //2. activamos la flag que bloquea la carga de bloques
+            S->bloquearCargaBloque = 1;
+        }
+        else
+        { //"delantero" puede retroceder una posición y se quedaría en el mismo bloque de memoria (sin conflictos)
+            S->delantero--;
+        }
+    }
+}
+
+void lexemaEncontradoSinOutput(SistemaEntrada S){
+    S->inicio = S->delantero;
+}
+
+
 
 char *lexemaEncontrado(SistemaEntrada S)
 {
-    //varias posibilidades:
-    NombreBloque nombreBloqueInicio = getBloqueDondeEsta(S, Inicio);
-    NombreBloque nombreBloqueDelantero = getBloqueDondeEsta(S, Delantero);
-    if (nombreBloqueInicio == nombreBloqueDelantero != NingunBloque)
-    {//1. "inicio" y "delante" están en el mismo bloque => situación normal
-        return getStringEntreDosPunteros(S->inicio, S->delantero);
-    }
-    else
-    {//2. "inicio" y "delante" están en bloques distintos => el lexema está entre dos bloques (en dos partes)
-        //desde "inicio" hasta el final del bloque en el que esté
-        char *parte1 = getStringEntreDosPunteros(S->inicio, nombreToBloque(S, nombreBloqueInicio) + BLOCK_SIZE);
-        //desde el comienzo del bloque de "delante" hasta donde esté delante
-        char *parte2 = getStringEntreDosPunteros(nombreToBloque(S, nombreBloqueDelantero), S->delantero);
-        //construimos la cadena destino y concatenamos las partes
-        char *lexema = malloc(sizeof(char) * (strlen(parte1) + strlen(parte2) + 1));
-        strcpy(lexema, parte1);
-        strcat(lexema, parte2);
-        //3. liberamos la memoria de las partes
-        free(parte1);
-        free(parte2);
-        return lexema;
-    }
+
+    char * lexema = crearLexemaEncontrado(S); //creamos el lexema sin modificar el estado interno del sistema de entrada
+    lexemaEncontradoSinOutput(S); //modificamos el estado interno como si hubiéramos encontrado un lexema
+    return lexema;
 }
 
 void destruirSistemaEntrada(SistemaEntrada S)

@@ -7,61 +7,133 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef enum TipoEstado
-{
-    Vacio,
-    LeyendoInt,
-    LeyendoFloat,
-    LeyendoAlfanumerico,
-} TipoEstado;
+//--------------------------------------------------------------------------------------------------
+//TIPOS DE DATOS
 
 struct TipoAnalizadorLexico
 {
-    TipoEstado estado;
+    TuplaLexemaId tupla;
+    char caracter;
+    unsigned estado;
+    unsigned aceptado;
 };
 
+//--------------------------------------------------------------------------------------------------
 //FUNCIONES PRIVADAS
 
-//1º managers: funciones que se comportan como un automata
+// --Autómatas--
+// devolveran NULL si IGNORAN EL LEXEMA RECONOCIDO
+// devolverán un puntero a chra con el lexema si GUARDAN EL LEXEMA RECONOCIDO
+// depende de ellos retrasar el sistema de entrada una posición si son del tipo de automatas que reconoce un elemento en el caracter siguiente al final del lexema
 
-//2º ommitters: funciones que avanzan una serie de caracteres para pasar de secciones no interesantes del código (comentarios)
+//TODO: reconocer las declaraciones de codificación
 
-//avanza el puntero delantero hasta que llegamos a un retorno de carro
-void ommitUntilEndOfLine(SistemaEntrada entrada){
-    char c;
-    while((c = siguienteCaracter(entrada)) != '\n'){
-        if(c == EOF){
-            return;
-        } else {
-            continue;
+//reconoce los cometarios monolínea ( "#" ya leido)
+void reconoceComentario(AnalizadorLexico A, SistemaEntrada entrada)
+{
+    A->estado = 1;
+    A->aceptado = 0;
+    while (!A->aceptado)
+    {
+        A->caracter = siguienteCaracter(entrada);
+        switch (A->estado)
+        {
+        case 0: //aun no reconocido nada
+            if (A->caracter == '#')
+                A->estado = 1;
+            break;
+        case 1: //# + cero o más cosas por en medio reconocidas
+            if (A->caracter == '\n')
+                A->estado = 2;
+            break;
+        case 2: //# + cero o más cosas por en medio + \n reconocido
+            A->aceptado = 1;
+            break;
         }
-
+    }
+    lexemaEncontradoSinOutput(entrada);
 }
+
+//reconoce cadenas de texto entrecomilladas con comillas simples ( ' ya leido)
+char *reconoceStringEntrecomilladoSimple(AnalizadorLexico A, SistemaEntrada entrada)
+{
+    A->estado = 1;
+    A->aceptado = 0;
+    while (!A->aceptado)
+    {
+        A->caracter = siguienteCaracter(entrada);
+        switch (A->estado)
+        {
+        case 0: // ' aún no leido
+            if (A->caracter == '\'')
+                A->estado = 1;
+            break;
+        case 1: // ' + cero o más cosas por en medio reconocidas
+            if (A->caracter == '\'')
+                A->estado = 2;
+            break;
+        case 2: // ' + otras cosa por en medio + ' reconocido -> estado final
+            A->aceptado = 1;
+        }
+    }
+    return lexemaEncontrado(entrada);
 }
 
+void reconoceStringEntrecomilladoDoble(AnalizadorLexico A, SistemaEntrada entrada)
+{
+    A->estado = 1;
+    A->aceptado = 0;
+    while (!A->aceptado)
+    {
+        A->caracter = siguienteCaracter(entrada);
+        switch (A->estado)
+        {
+        case 0: // ' aún no leido
+            if (A->caracter == '\"')
+                A->estado = 1;
+            break;
+        case 1: // ' + cero o más cosas por en medio reconocidas
+            if (A->caracter == '\"')
+                A->estado = 2;
+            break;
+        case 2: // ' + otras cosa por en medio + ' reconocido -> estado final
+            A->aceptado = 1;
+        default:
+            break;
+        }
+    }
+    return lexemaEncontrado(entrada);
+}
 
+//--------------------------------------------------------------------------------------------------
 //FUNCIONES PÚBLICAS
 
 AnalizadorLexico crearAnalizadorLexico()
 {
-    AnalizadorLexico A = (AnalizadorLexico)malloc(sizeof(struct TipoAnalizadorLexico));
-    A->estado = Vacio;
-    return A;
+    //TODO: dejar por ahora pero eliminar si al final no se acaba usanndo
+    return malloc(sizeof(struct TipoAnalizadorLexico));
 }
 
 TuplaLexemaId siguienteComponenteLexico(AnalizadorLexico A, SistemaEntrada entrada, TablaSimbolos tablaSimbolos)
 {
-    TuplaLexemaId tupla;
-    char caracter;
-    //el estado siempre va a ser vacío
-    if(caracter == '#'){
+    A->tupla = NULL;
+    //obtenemos el caracter que toque según el sistema de entrada
+    char caracter = siguienteCaracter(entrada);
+    while (A->tupla == NULL)
+    { //mientras no tengamos una tupla formada (habríamos encontrado un lexema) iteramos
+        switch (caracter)
+        {
+        case '#':
+            reconoceComentario(A, entrada);
+            break;
+        case '\'':
+            reconoceStringEntrecomilladoSimple(A, entrada);
 
+            break;
+        case '\t':
+            break;
+        }
     }
-    siguienteCaracter(entrada);
-    siguienteCaracter(entrada);
-    siguienteCaracter(entrada);
-    siguienteCaracter(entrada);
-    return crearTupla(charToString(siguienteCaracter(entrada)), EOF);
 }
 
 void destruirAnalizadorLexico(AnalizadorLexico A)

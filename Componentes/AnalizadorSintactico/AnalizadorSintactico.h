@@ -10,6 +10,6 @@
  * En buena lógica devolvería una lista de esos componentes pero como no se hará un análisi sintáctico
  * como tal se imprimen en la terminal dichos componemtes léxicos a medida que vayan llegando para ahorrar memoria
 */
-void obtenerComponentesLexicos(SistemaEntrada entrada, TablaSimbolos tabla, AnalizadorLexico lexico);
+void obtenerComponentesLexicos(AnalizadorLexico lexico, SistemaEntrada entrada, TablaSimbolos tabla);
 
 #endif // ANALIZADOR_SINTACTICO_H

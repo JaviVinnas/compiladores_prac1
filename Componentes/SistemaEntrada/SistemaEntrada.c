@@ -131,7 +131,7 @@ char *crearStringEntreDosPunteros(char *punteroMenor, char *punteroMayor)
 /**
  * Crea el lexema que correspondería al estado interno del sistema de entrada SIN MODIFICAR ESTE ESTADO
  */
-char *crearLexemaEncontrado(SistemaEntrada S){
+char *crearLexemaEntrePunterosDeLectura(SistemaEntrada S){
     //obtenemos los bloques donde están los punteros de lectura
     NombreBloque nombreBloqueInicio = getBloqueDondeEsta(S, PunteroInicio);
     NombreBloque nombreBloqueDelantero = getBloqueDondeEsta(S, PunteroDelantero);
@@ -219,11 +219,11 @@ void devolverCaracter(SistemaEntrada S)
         { //"delantero" está en la primera posición de su bloque (del bloque donde está)
             //1. Movemos delantero al final del otro bloque de memoria (el bloque donde no está)
             S->delantero = nombreToBloque(S, getBloqueOpuesto(getBloqueDondeEsta(S, PunteroDelantero))) + BLOCK_SIZE - 1;
-            //2. activamos la flag que bloquea la carga de bloques
+            //2. activamos la flag que bloquea la carga de bloques para no perder el bloque 
             S->bloquearCargaBloque = 1;
         }
         else
-        { //"delantero" puede retroceder una posición y se quedaría en el mismo bloque de memoria (sin conflictos)
+        { //"delantero" puede retroceder una posición y se quedaría dentro del mismo bloque de memoria en el qye ya estaba (sin conflictos)
             S->delantero--;
         }
     }
@@ -238,7 +238,7 @@ void lexemaEncontradoSinOutput(SistemaEntrada S){
 char *lexemaEncontrado(SistemaEntrada S)
 {
 
-    char * lexema = crearLexemaEncontrado(S); //creamos el lexema sin modificar el estado interno del sistema de entrada
+    char * lexema = crearLexemaEntrePunterosDeLectura(S); //creamos el lexema sin modificar el estado interno del sistema de entrada
     lexemaEncontradoSinOutput(S); //modificamos el estado interno como si hubiéramos encontrado un lexema
     return lexema;
 }

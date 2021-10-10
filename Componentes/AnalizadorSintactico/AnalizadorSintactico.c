@@ -5,18 +5,16 @@
 #include <Utils.h>
 #include <stdio.h>
 
-void obtenerComponentesLexicos(SistemaEntrada entrada, TablaSimbolos tabla, AnalizadorLexico lexico)
+void obtenerComponentesLexicos(AnalizadorLexico lexico, SistemaEntrada entrada, TablaSimbolos tabla)
 {
     printf("Componentes léxicos de wilcoxon.py:\n");
     TuplaLexemaId tupla;
     while (1)
     {
-        tupla = siguienteComponenteLexico(lexico, entrada, tabla);
+        tupla = siguienteComponenteLexico(lexico,entrada, tabla);
         printTupla(tupla);
         if (getTuplaId(tupla) == END_OF_FILE)
             break;
-        destruirTupla(tupla);
     }
-    destruirTupla(tupla);
     printSeparator();
 }

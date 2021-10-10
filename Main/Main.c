@@ -12,10 +12,10 @@ int main(int argc, char const *argv[])
     //2º imprimimos la tabla de símbolos
     imprimirTablaSimbolos(tabla);
     //3º ejecutamos el programa (pruebas mientras no esté completo)
-    obtenerComponentesLexicos(entrada, tabla, lexico);
+    obtenerComponentesLexicos(lexico, entrada, tabla);
     //4º liberamos los recursos
+    destruirAnalizadorLexico(lexico);
     destruirSistemaEntrada(entrada);
     destruirTablaSimbolos(tabla);
-    destruirAnalizadorLexico(lexico);
     return 0;
 }

@@ -11,8 +11,8 @@ typedef struct TipoAnalizadorLexico *AnalizadorLexico;
 AnalizadorLexico crearAnalizadorLexico();
 
 /**
- * Obtiene el siguiente componente léxico del sistema de entrada que se
- * le pase por argumentos usando la tabla de símbolos que se le pase por argumentos.
+ * Obtiene el siguiente componente léxico del sistema de entrada (que se le pase por argumentos)
+ * usando la tabla de símbolos (que se le pase por argumentos). Devuelve una referencia a una tupla que puede estar en la tabla de símbolos o no, así que mejor no borrarla.
  * */
 TuplaLexemaId siguienteComponenteLexico(AnalizadorLexico A, SistemaEntrada entrada, TablaSimbolos tablaSimbolos);
 

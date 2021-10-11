@@ -37,7 +37,10 @@
 #define WITH 332
 #define YIELD 333
 //definiciones otros componentes léxicos en python de utilidad
+
 #define IDENTIFICADOR 334
 #define END_OF_FILE 335
+#define STRING_LITERAL 336
+#define DOCSTRING 337
 
 #endif //DEFINICIONES_H

@@ -229,6 +229,29 @@ void reconoceTabulacion(AnalizadorLexico A, SistemaEntrada entrada)
     A->tupla = crearTupla("Tabulacion", TABULACION);
 }
 
+//reconoce cadenas que puedan ser float en python
+//puede ser que lleguemos con => . (punto) YA LEIDO => estado 0
+//puede ser que lleguemos con => [0-9]+. YA LEIDO => estado 1
+//puede ser que lleguemos con => [0-9]+.(e|E) YA LEIDO => estado 2
+void reconocePuntoFlotante(AnalizadorLexico A, SistemaEntrada entrada, unsigned estadoInicial)
+{
+    unsigned estado = estadoInicial;
+    unsigned aceptado = 0;
+    while (aceptado)
+    {
+        A->caracter = siguienteCaracter(entrada);
+        switch (estado)
+        {
+        case 0: //. (punto) leido
+            break;
+        case 1: //[0-9]+. leido
+            break;
+        case 2: //[0-9]+.(e|E) leido
+            break;
+        }
+    }
+}
+
 //reconoce cadenas que puedan ser enteros de python (1 DIGITO YA LEIDO)
 void reconoceEntero(AnalizadorLexico A, SistemaEntrada entrada, unsigned firstIsZero)
 {
@@ -239,47 +262,34 @@ void reconoceEntero(AnalizadorLexico A, SistemaEntrada entrada, unsigned firstIs
         A->caracter = siguienteCaracter(entrada);
         switch (estado)
         {
-        case 0: //0 leido
-            if(A->caracter == '0')
-                estado = 2;
-            else if (A->caracter == 'B' || A->caracter == 'b')
-                estado = 3;
-            else if (A->caracter == 'O' || A->caracter == 'o')
-                estado = 4;
-            else if (A->caracter == 'X' || A->caracter == 'x')
-                estado = 5;
-            else //siguiente cadena
-            {
-                devolverCaracter(entrada);
-                lexemaEncontradoSinOutput(entrada);
-                return;
-            }
-            break;
-        case 1: //número distinto de cero leido
-            if (A->caracter == '_')
-                estado = 6;
-            else if (!isdigit(A->caracter) && A->caracter != '_')
+        case 0: //[1-9]+ leído
+            if (!isdigit(A->caracter))
             {
                 devolverCaracter(entrada);
                 aceptado = 1;
             }
             break;
-        case 2: //recibido ceros sin 
+        case 1: //0 leído
+            if (A->caracter == 'x' || A->caracter == 'X')
+            {
+                estado = 2;
+            }
             break;
-        case 3:
+        case 2: //0x leído
+            if (isxdigit(A->caracter))
+            {
+                estado = 3;
+            }
+            {
+                estado = 3;
+            }
             break;
-        case 4:
-            break;
-        case 5:
-            break;
-        case 6:
-            break;
-        case 7:
-            break;
-        case 8:
-            break;
-        case 9:
-            break;
+        case 3: //0x(HEX)+ leído
+            if (!isxdigit(A->caracter))
+            {
+                devolverCaracter(entrada);
+                aceptado = 1;
+            }
         }
     }
 }

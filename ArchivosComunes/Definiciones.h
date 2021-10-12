@@ -42,5 +42,7 @@
 #define END_OF_FILE 335
 #define STRING_LITERAL 336
 #define DOCSTRING 337
+#define DUNDER_NAME 338
+#define TABULACION 339
 
 #endif //DEFINICIONES_H

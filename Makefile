@@ -64,6 +64,9 @@ all:
 ./Componentes/AnalizadorLexico/AnalizadorLexico.o: ./ArchivosComunes/Utils/Utils.h
 ./Componentes/AnalizadorLexico/AnalizadorLexico.o: /usr/include/stdio.h
 ./Componentes/AnalizadorLexico/AnalizadorLexico.o: /usr/include/stdlib.h
+./Componentes/AnalizadorLexico/AnalizadorLexico.o: /usr/include/ctype.h
+./Componentes/AnalizadorLexico/AnalizadorLexico.o: /usr/include/features.h
+./Componentes/AnalizadorLexico/AnalizadorLexico.o: /usr/include/stdc-predef.h
 ./Componentes/AnalizadorSintactico/AnalizadorSintactico.o: ./Componentes/SistemaEntrada/SistemaEntrada.h
 ./Componentes/AnalizadorSintactico/AnalizadorSintactico.o: ./Componentes/TablaSimbolos/TablaSimbolos.h
 ./Componentes/AnalizadorSintactico/AnalizadorSintactico.o: ./Componentes/AnalizadorLexico/AnalizadorLexico.h

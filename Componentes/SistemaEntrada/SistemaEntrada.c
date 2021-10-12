@@ -156,6 +156,33 @@ char *crearLexemaEntrePunterosDeLectura(SistemaEntrada S){
     }
 }
 
+//avanza el puntero de lectura una posición y se ocupa de que termine en una posición válida
+void gestionarAvanceDelantero(SistemaEntrada S){
+    S->delantero++;
+
+    //GESTIONAMOS LO QUE PASA SI LLEGAMOS A UN CENTINELA (si llegamos al final del archivo no hacemos nada)
+
+    if (estaAlFinalDeUnBloque(S, PunteroDelantero) != NingunBloque)
+    { //estamos en un centinela
+        if (getBloqueDondeEsta(S, PunteroInicio) == getBloqueDondeEsta(S, PunteroDelantero))
+        { //los dos punteros de lectura están en el mismo bloque
+            //1. pasamos "delantero" al comienzo del otro bloque de memoria
+            S->delantero = nombreToBloque(S, getBloqueOpuesto(getBloqueDondeEsta(S, PunteroDelantero)));
+            //2. si tuvieramos la flag que bloquea la carga de bloques activa, la desactivamos para la siguiente vez
+            if (S->bloquearCargaBloque)
+                S->bloquearCargaBloque = 0;
+            else
+                //si no, cargamos el siguiente bloque para que lo lea "delantero"
+                cargarSiguienteBloqueDeArchivo(S, getBloqueDondeEsta(S, PunteroDelantero));
+        }
+        else
+        {
+            //CORREGIR_ERROR: gestionar error en errores.h
+            fprintf(stderr, "Overflow de las memorias del sistema de entrada (lexema más largo que las dos memorias juntas)");
+        }
+    }
+}
+
 //----------------------------------------------------------------------------------------------------------------------
 //FUNCIONES PUBLICAS
 
@@ -180,35 +207,13 @@ SistemaEntrada crearSistemaEntrada(char *nombre_archivo)
     return S;
 }
 
+
 char siguienteCaracter(SistemaEntrada S)
 {
-    if (*(S->delantero) == '\0')
-        return *(S->delantero); //devolvemos el caracter antes de avanzar el puntero
-    //si no es un centinela, avanzamos el puntero
-    S->delantero++;
-
-    //GESTIONAMOS LO QUE PASA SI LLEGAMOS A UN CENTINELA (si llegamos al final del archivo no hacemos nada)
-
-    if (estaAlFinalDeUnBloque(S, PunteroDelantero) != NingunBloque)
-    { //estamos en un centinela
-        if (getBloqueDondeEsta(S, PunteroInicio) == getBloqueDondeEsta(S, PunteroDelantero))
-        { //los dos punteros de lectura están en el mismo bloque
-            //1. pasamos "delantero" al comienzo del otro bloque de memoria
-            S->delantero = nombreToBloque(S, getBloqueOpuesto(getBloqueDondeEsta(S, PunteroDelantero)));
-            //2. si tuvieramos la flag que bloquea la carga de bloques activa, la desactivamos para la siguiente vez
-            if (S->bloquearCargaBloque)
-                S->bloquearCargaBloque = 0;
-            else
-                //si no, cargamos el siguiente bloque para que lo lea "delantero"
-                cargarSiguienteBloqueDeArchivo(S, getBloqueDondeEsta(S, PunteroDelantero));
-        }
-        else
-        {
-            //CORREGIR_ERROR: gestionar error en errores.h
-            fprintf(stderr, "Overflow de las memorias del sistema de entrada (lexema más largo que las dos memorias juntas)");
-        }
-    }
-    return *(S->delantero);
+    char caracter = *(S->delantero);
+    if (caracter != '\0')
+        gestionarAvanceDelantero(S);
+    return caracter;
 }
 
 void devolverCaracter(SistemaEntrada S)

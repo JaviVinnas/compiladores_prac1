@@ -1,6 +1,6 @@
-#CFLAGS -> donde directorios del proyecto donde haya ficheros.h
-#OBJETOS -> los .c, pero cambiándoles la extensión por .o con la ruta desde donde está el makefile (la raíz del proyecto)
-#FUENTES -> los .c con la ruta desde donde está el makefile (la raíz del proyecto)
+#CFLAGS -> donde directorios del proyecto donde haya archivos *.h
+#OBJETOS -> los archivos *.c, pero cambiándoles la extensión por .o con la ruta desde donde está el makefile (la raíz del proyecto)
+#FUENTES -> los archivos *.c con la ruta desde donde está el makefile (la raíz del proyecto)
 
 CFLAGS=-g \
 -I./ArchivosComunes \

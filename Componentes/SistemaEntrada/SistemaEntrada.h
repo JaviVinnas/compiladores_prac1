@@ -1,7 +1,7 @@
 #ifndef SIST_ENTRADA_H
 #define SIST_ENTRADA_H
 
-#define BLOCK_SIZE 4096
+#define BLOCK_SIZE 10 //4096 como máximo tamaño que te podrías traer del disco de golpe
 #define BLOCK_SIZE_WITH_GUARD BLOCK_SIZE+1
 
 struct TipoSistemaEntrada;

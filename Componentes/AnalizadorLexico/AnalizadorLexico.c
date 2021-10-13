@@ -11,13 +11,6 @@
 //--------------------------------------------------------------------------------------------------
 //TIPOS DE DATOS
 
-typedef enum EstadoAutomata
-{
-    Aceptado,
-    Rechazado,
-    Final,
-} NombreBloque;
-
 struct TipoAnalizadorLexico
 {
     TuplaLexemaId tupla;
@@ -44,7 +37,10 @@ void reconoceComentario(AnalizadorLexico A, SistemaEntrada entrada)
         {
         case 0: //# + cero o más cosas por en medio reconocidas
             if (A->caracter == '\n')
+            {
+                devolverCaracter(entrada);
                 aceptado = 1;
+            }
             break;
         }
     }
@@ -61,15 +57,15 @@ void reconoceDocString(AnalizadorLexico A, SistemaEntrada entrada, char tipoComi
         A->caracter = siguienteCaracter(entrada);
         switch (estado)
         {
-        case 0: // 3 comillas ya leidas + cero o más cosas que no son comillas
+        case 0: // {comilla}{comilla}{comilla}{cosas distinta de comilla}+
             if (A->caracter == tipoComilla)
                 estado = 1;
             break;
-        case 1: // 3 comillas + cero o más cosas que no son comillas + 1 comilla
+        case 1: // {comilla}{comilla}{comilla}{cosas distinta de comilla}+{comilla}
             if (A->caracter == tipoComilla)
                 estado = 2; //CORREGIR_ERROR: gestionar error en errores.h si recibimos algo que no son comillas
             break;
-        case 2: // 3 comillas + cero o más cosas que no son comillas + 2 comilla
+        case 2: // {comilla}{comilla}{comilla}{cosas distinta de comilla}+{comilla}{comilla}
             if (A->caracter == tipoComilla)
                 aceptado = 1; //CORREGIR_ERROR: gestionar error en errores.h si recibimos algo que no son comillas
             break;
@@ -89,33 +85,33 @@ void reconoceStringLiteral(AnalizadorLexico A, SistemaEntrada entrada, char tipo
         A->caracter = siguienteCaracter(entrada);
         switch (estado)
         {
-        case 0: //comilla inicial leida
+        case 0: //{comilla}
             if (A->caracter == tipoComilla)
                 estado = 1;
             else
                 estado = 2;
             break;
-        case 1: //comilla inicial + mínimo un caracter que no es la comilla
-            if (A->caracter == tipoComilla)
-                aceptado = 1; //si llega un caracter tenemos un string literal bien formado
-        case 2:               //comilla inicial + comilla inicial
+        case 1: //{comilla}{comilla}
             if (A->caracter == tipoComilla)
             {
-                reconoceDocString(A, entrada, tipoComilla); //si llega otra comilla tenemos un docstrings
+                reconoceDocString(A, entrada, tipoComilla);
                 return;
             }
             else
-            {                              //si no es una comilla es que teníamos una cadena vacía
-                devolverCaracter(entrada); //devolvemos el  caracter diferente a la comilla
+            {
+                devolverCaracter(entrada);
                 aceptado = 1;
             }
             break;
+        case 2: //{comilla}{cosa distinta de comilla}+
+            if (A->caracter == tipoComilla)
+                aceptado = 1;
         }
     }
     A->tupla = crearTupla(lexemaEncontrado(entrada), STRING_LITERAL);
 }
 
-//reconoce identificadores especiales de python que empiezan por __ (2) y terminan por __ (2) (2 BARRAS BAJAS YA LEIDAS)
+//reconoce identificadores especiales de python que empiezan por __ (2) y terminan por __ (2) (1 BARRA BAJA YA LEIDA)
 void reconoceDunderName(AnalizadorLexico A, SistemaEntrada entrada)
 {
     unsigned estado = 0;
@@ -125,28 +121,26 @@ void reconoceDunderName(AnalizadorLexico A, SistemaEntrada entrada)
         A->caracter = siguienteCaracter(entrada);
         switch (estado)
         {
-        case 0: //dos barras bajas leidas
-            if (!isalpha(A->caracter) || !isdigit(A->caracter))
+        case 0: //_ leido
+            if (A->caracter == '_')
                 estado = 1;
             break;
-        case 1: //dos barras bajas + 1 o más caracter o numero
+        case 1: //__(caracter | numero | _)+
             if (A->caracter == '_')
                 estado = 2;
             break;
-        case 2: //dos barras bajas + 1 o más caracter o numero + 1 barra baja
-            if (A->caracter != '_')
-                estado = 1;
-            else
-            {
+        case 2: //__(caracter | numero | _)+_
+            if (A->caracter == '_')
                 aceptado = 1;
-            }
+            else
+                estado = 1;
         }
     }
     A->tupla = crearTupla(lexemaEncontrado(entrada), DUNDER_NAME);
 }
 
-//reconoce cadenas que puedan ser identificadores de python (LETRA O _ YA LEIDO)
-void reconoceIdentificador(AnalizadorLexico A, SistemaEntrada entrada)
+//reconoce cadenas que puedan ser identificadores de python (1 LETRA YA LEIDA)
+void reconoceIdentificador(AnalizadorLexico A, SistemaEntrada entrada, TablaSimbolos tablaSimbolos)
 {
     unsigned estado = 0;
     unsigned aceptado = 0;
@@ -155,31 +149,15 @@ void reconoceIdentificador(AnalizadorLexico A, SistemaEntrada entrada)
         A->caracter = siguienteCaracter(entrada);
         switch (estado)
         {
-        case 0: //alfabetico o _ ya leido
-            if (A->caracter == '_')
-            {
-                reconoceDunderName(A, entrada);
-                return;
-            }
-            else if (isalnum(A->caracter))
-            {
-                estado = 1;
-            }
-            else
-            { //llegamos a otro caracter que no es cadena de texto
-                devolverCaracter(entrada);
-                aceptado = 1;
-            }
-            break;
-        case 1: //alfabetico o _ + letra o numero (o _)
+        case 0: //[letra|_]+ leida
             if (!isalnum(A->caracter) && A->caracter != '_')
-            { //llegamos a otro caracter que no es cadena de texto
+            {
                 devolverCaracter(entrada);
                 aceptado = 1;
             }
         }
     }
-    A->tupla = crearTupla(lexemaEncontrado(entrada), IDENTIFICADOR);
+    A->tupla = buscarIdEnTablaSimbolos(tablaSimbolos, lexemaEncontrado(entrada));
 }
 
 //reconoce tabulaciones en el código, es decir grupos de 4 espacios seguidos de algo que no es un espacio
@@ -230,26 +208,56 @@ void reconoceTabulacion(AnalizadorLexico A, SistemaEntrada entrada)
 }
 
 //reconoce cadenas que puedan ser float en python
-//puede ser que lleguemos con => . (punto) YA LEIDO => estado 0
+//puede ser que lleguemos con => .[0-9]  YA LEIDO => estado 0
 //puede ser que lleguemos con => [0-9]+. YA LEIDO => estado 1
-//puede ser que lleguemos con => [0-9]+.(e|E) YA LEIDO => estado 2
+//puede ser que lleguemos con => [0-9]+(e|E) YA LEIDO => estado 2
 void reconocePuntoFlotante(AnalizadorLexico A, SistemaEntrada entrada, unsigned estadoInicial)
 {
     unsigned estado = estadoInicial;
     unsigned aceptado = 0;
-    while (aceptado)
+    while (!aceptado)
     {
         A->caracter = siguienteCaracter(entrada);
         switch (estado)
         {
-        case 0: //. (punto) leido
+        case 0: //.[0-9]+ leido
+            if (A->caracter == 'E' || A->caracter == 'e')
+                estado = 2;
+            else if (!isdigit(A->caracter))
+            {
+                devolverCaracter(entrada);
+                aceptado = 1;
+            }
             break;
         case 1: //[0-9]+. leido
+            if (isdigit(A->caracter))
+                estado = 0;
+            else
+            {
+                devolverCaracter(entrada);
+                aceptado = 1;
+            }
             break;
-        case 2: //[0-9]+.(e|E) leido
+        case 2: //{parteNoExponencial}(e|E) leido
+            if (A->caracter == '+' || A->caracter == '-')
+                estado = 3;
+            else if (isdigit(A->caracter))
+                estado = 4;
+            break;
+        case 3: //{parteNoExponencial}(e|E)(+|-) leido
+            if (isdigit(A->caracter))
+                estado = 4;
+            break;
+        case 4: //{parteNoExponencial}(e|E)(+|-)?[0-9]+ leido
+            if (!isdigit(A->caracter))
+            {
+                devolverCaracter(entrada);
+                aceptado = 1;
+            }
             break;
         }
     }
+    A->tupla = crearTupla(lexemaEncontrado(entrada), FLOAT);
 }
 
 //reconoce cadenas que puedan ser enteros de python (1 DIGITO YA LEIDO)
@@ -263,23 +271,45 @@ void reconoceEntero(AnalizadorLexico A, SistemaEntrada entrada, unsigned firstIs
         switch (estado)
         {
         case 0: //[1-9]+ leído
-            if (!isdigit(A->caracter))
+            if (A->caracter == '.')
+            {
+                reconocePuntoFlotante(A, entrada, 1);
+                return;
+            }
+            else if (A->caracter == 'E' || A->caracter == 'e')
+            {
+                reconocePuntoFlotante(A, entrada, 2);
+                return;
+            }
+            else if (!isdigit(A->caracter))
             {
                 devolverCaracter(entrada);
                 aceptado = 1;
             }
             break;
         case 1: //0 leído
-            if (A->caracter == 'x' || A->caracter == 'X')
+            if (A->caracter == '.')
+            {
+                reconocePuntoFlotante(A, entrada, 1);
+                return;
+            }
+            else if (A->caracter == 'E' || A->caracter == 'e')
+            {
+                reconocePuntoFlotante(A, entrada, 2);
+                return;
+            }
+            else if (A->caracter == 'x' || A->caracter == 'X')
             {
                 estado = 2;
+            }
+            else if (A->caracter != '0')
+            {
+                devolverCaracter(entrada);
+                aceptado = 1;
             }
             break;
         case 2: //0x leído
             if (isxdigit(A->caracter))
-            {
-                estado = 3;
-            }
             {
                 estado = 3;
             }
@@ -291,6 +321,171 @@ void reconoceEntero(AnalizadorLexico A, SistemaEntrada entrada, unsigned firstIs
                 aceptado = 1;
             }
         }
+    }
+    A->tupla = crearTupla(lexemaEncontrado(entrada), INT);
+}
+
+//reconoce los caracteres que lleguen despues de un punto (posibilidad de floats) (UN PUNTO YA LEIDO)
+void reconocePunto(AnalizadorLexico A, SistemaEntrada entrada)
+{
+    unsigned estado = 0;
+    unsigned aceptado = 0;
+    while (!aceptado)
+    {
+        A->caracter = siguienteCaracter(entrada);
+        switch (estado)
+        {
+        case 0: //. leído
+            if (isdigit(A->caracter))
+            {
+                reconocePuntoFlotante(A, entrada, 0);
+                return;
+            }
+            else
+            {
+                devolverCaracter(entrada);
+                aceptado = 1;
+            }
+            break;
+        }
+    }
+    lexemaEncontradoSinOutput(entrada);
+    A->tupla = crearTupla(".", (int)'.');
+}
+
+//reconoce los caracteres que lleguen despues de un + (posibilidad de +=) (UN + YA LEIDO)
+void reconoceMas(AnalizadorLexico A, SistemaEntrada entrada)
+{
+
+    unsigned estado = 0, aceptadoMas = 0, aceptadoMasIgual = 0;
+    while (!aceptadoMas && !aceptadoMasIgual)
+    {
+        A->caracter = siguienteCaracter(entrada);
+        switch (estado)
+        {
+        case 0:
+            if (A->caracter == '=')
+            {
+                aceptadoMasIgual = 1;
+            }
+            else
+            {
+                devolverCaracter(entrada);
+                aceptadoMas = 1;
+            }
+        }
+    }
+    if (aceptadoMas)
+    {
+        lexemaEncontradoSinOutput(entrada);
+        A->tupla = crearTupla("+", (int)'+');
+    }
+    else
+    {
+        lexemaEncontradoSinOutput(entrada);
+        A->tupla = crearTupla("+=", MAS_IGUAL);
+    }
+}
+
+//reconoce los caracteres que lleguen despues de un * (posibilidad de **) (UN * YA LEIDO)
+void reconoceAsterisco(AnalizadorLexico A, SistemaEntrada entrada)
+{
+
+    unsigned estado = 0, aceptadoIgual = 0, aceptadoIgualIgual = 0;
+    while (!aceptadoIgual && !aceptadoIgualIgual)
+    {
+        A->caracter = siguienteCaracter(entrada);
+        switch (estado)
+        {
+        case 0:
+            if (A->caracter == '*')
+            {
+                aceptadoIgualIgual = 1;
+            }
+            else
+            {
+                devolverCaracter(entrada);
+                aceptadoIgual = 1;
+            }
+        }
+    }
+    if (aceptadoIgual)
+    {
+        lexemaEncontradoSinOutput(entrada);
+        A->tupla = crearTupla("*", (int)'*');
+    }
+    else
+    {
+        lexemaEncontradoSinOutput(entrada);
+        A->tupla = crearTupla("**", EXPONENCIAL);
+    }
+}
+
+//reconoce los caracteres que lleguen despues de un < (posibilidad de <=) (UN < YA LEIDO)
+void reconoceMenor(AnalizadorLexico A, SistemaEntrada entrada)
+{
+
+    unsigned estado = 0, aceptadoIgual = 0, aceptadoIgualIgual = 0;
+    while (!aceptadoIgual && !aceptadoIgualIgual)
+    {
+        A->caracter = siguienteCaracter(entrada);
+        switch (estado)
+        {
+        case 0:
+            if (A->caracter == '=')
+            {
+                aceptadoIgualIgual = 1;
+            }
+            else
+            {
+                devolverCaracter(entrada);
+                aceptadoIgual = 1;
+            }
+        }
+    }
+    if (aceptadoIgual)
+    {
+        lexemaEncontradoSinOutput(entrada);
+        A->tupla = crearTupla("<", (int)'<');
+    }
+    else
+    {
+        lexemaEncontradoSinOutput(entrada);
+        A->tupla = crearTupla("<=", EXPONENCIAL);
+    }
+}
+
+//reconoce los caracteres que lleguen despues de un = (posibilidad de ==) (UN = YA LEIDO)
+void reconoceIgual(AnalizadorLexico A, SistemaEntrada entrada)
+{
+
+    unsigned estado = 0, aceptadoIgual = 0, aceptadoIgualIgual = 0;
+    while (!aceptadoIgual && !aceptadoIgualIgual)
+    {
+        A->caracter = siguienteCaracter(entrada);
+        switch (estado)
+        {
+        case 0:
+            if (A->caracter == '=')
+            {
+                aceptadoIgualIgual = 1;
+            }
+            else
+            {
+                devolverCaracter(entrada);
+                aceptadoIgual = 1;
+            }
+        }
+    }
+    if (aceptadoIgual)
+    {
+        lexemaEncontradoSinOutput(entrada);
+        A->tupla = crearTupla("=", (int)'=');
+    }
+    else
+    {
+        lexemaEncontradoSinOutput(entrada);
+        A->tupla = crearTupla("==", EXPONENCIAL);
     }
 }
 
@@ -317,16 +512,40 @@ TuplaLexemaId siguienteComponenteLexico(AnalizadorLexico A, SistemaEntrada entra
         //  a -> sin automatas (se crea la tupla directamente usando como nombre el símbolo)
         //  b -> sin autómatas (se crea la tupla directamente usando un nombre de tupla diferente al símbolo)
         //  c -> con automatas (el automata crea la tupla)
-        if (A->caracter == '.' ||
-            A->caracter == '=' ||
-            A->caracter == '(' ||
+        if (A->caracter == '(' ||
             A->caracter == ')' ||
             A->caracter == '{' ||
             A->caracter == '}' ||
+            A->caracter == '[' ||
+            A->caracter == ']' ||
+            A->caracter == '>' ||
+            A->caracter == ':' ||
+            A->caracter == '/' ||
+            A->caracter == '-' ||
             A->caracter == ',')
         {
             char *monoCharString = lexemaEncontrado(entrada);
             A->tupla = crearTupla(monoCharString, (int)monoCharString[0]);
+        }
+        else if (A->caracter == '=')
+        {
+            reconoceIgual(A, entrada);
+        }
+        else if (A->caracter == '<')
+        {
+            reconoceMenor(A, entrada);
+        }
+        else if (A->caracter == '*')
+        {
+            reconoceAsterisco(A, entrada);
+        }
+        else if (A->caracter == '+')
+        {
+            reconoceMas(A, entrada);
+        }
+        else if (A->caracter == '.')
+        {
+            reconocePunto(A, entrada);
         }
         else if (A->caracter == ' ')
         {
@@ -338,9 +557,17 @@ TuplaLexemaId siguienteComponenteLexico(AnalizadorLexico A, SistemaEntrada entra
         }
         else if (A->caracter == '_')
         {
-            reconoceComentario(A, entrada);
+            reconoceDunderName(A, entrada);
         }
-
+        else if (A->caracter == '_')
+        {
+            reconoceDunderName(A, entrada);
+        }
+        else if (A->caracter == '\0')
+        {
+            lexemaEncontradoSinOutput(entrada);
+            A->tupla = crearTupla("--FIN DEL ARCHIVO--", END_OF_FILE);
+        }
         else if (A->caracter == '\n')
         {
             lexemaEncontradoSinOutput(entrada);
@@ -350,10 +577,9 @@ TuplaLexemaId siguienteComponenteLexico(AnalizadorLexico A, SistemaEntrada entra
         {
             reconoceStringLiteral(A, entrada, A->caracter);
         }
-        else if (isalpha(A->caracter) || (A->caracter == '_'))
+        else if (isalpha(A->caracter))
         {
-            reconoceIdentificador(A, entrada);
-            //TODO: debemos chequear la tabla de símbolos
+            reconoceIdentificador(A, entrada, tablaSimbolos);
         }
         else if (isdigit(A->caracter))
         {

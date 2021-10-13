@@ -31,7 +31,7 @@ ABBRojoNegro crearABBRojoNegro(void)
         if (NodoNulo == NULL)
             printf("Out of space!!!");
         NodoNulo->izq = NodoNulo->der = NodoNulo; //se tiene a si mismo como contenido (fin del arbol)
-        NodoNulo->color = Negro; //siempre negro como la raiz
+        NodoNulo->color = Negro;                  //siempre negro como la raiz
         NodoNulo->contenido = crearTupla(NULL, 123);
     }
 
@@ -91,15 +91,15 @@ ABBRojoNegro vaciarABBRojoNegro(ABBRojoNegro T)
     return T;
 }
 
-Posicion buscar(ContenidoNodo X, ABBRojoNegro T)
+Posicion buscarABBRojoNegro(Lexema lexema, ABBRojoNegro T)
 {
     if (T == NodoNulo)
-        return NodoNulo;
+        return NULL;
     //buscamos y ordenamos por el lexema
-    if (compareTuplas(X, T->contenido) < 0) //si es menor
-        return buscar(X, T->izq);
-    else if (compareTuplas(X, T->contenido) > 0) //si es mayor
-        return buscar(X, T->der);
+    if (strcmp(lexema, getTuplaLexema(T->contenido)) < 0) //si es menor
+        return buscarABBRojoNegro(lexema, T->izq);
+    else if (strcmp(lexema, getTuplaLexema(T->contenido)) > 0) //si es mayor
+        return buscarABBRojoNegro(lexema, T->der);
     else //si son iguales
         return T;
 }
@@ -177,7 +177,7 @@ static void HandleReorient(ContenidoNodo Item, ABBRojoNegro T)
     if (P->color == Rojo) /* Have to rotate */
     {
         GP->color = Rojo;
-        if ((compareTuplas(Item, GP->contenido)<0) != (compareTuplas(Item, P->contenido)<0))
+        if ((compareTuplas(Item, GP->contenido) < 0) != (compareTuplas(Item, P->contenido) < 0))
             P = Rotate(Item, GP); /* Start double rotate */
         X = Rotate(Item, GGP);
         X->color = Negro;
@@ -189,12 +189,12 @@ ABBRojoNegro insertarABBRojoNegro(ContenidoNodo Item, ABBRojoNegro T)
 {
     X = P = GP = T;
     NodoNulo->contenido = Item;
-    while (compareTuplas(X->contenido,Item) != 0) /* Descend down the tree */
+    while (compareTuplas(X->contenido, Item) != 0) /* Descend down the tree */
     {
         GGP = GP;
         GP = P;
         P = X;
-        if (compareTuplas(Item , X->contenido) < 0)
+        if (compareTuplas(Item, X->contenido) < 0)
             X = X->izq;
         else
             X = X->der;
@@ -228,7 +228,7 @@ ABBRojoNegro eliminar(ContenidoNodo Item, ABBRojoNegro T)
     return T;
 }
 
-ContenidoNodo obtener_contenido(Posicion P)
+ContenidoNodo obtenerContenidoPosicionABBRojoNegro(Posicion P)
 {
     return P->contenido;
 }

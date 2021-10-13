@@ -11,13 +11,13 @@ typedef struct NodoRojoNegro *Posicion;
 typedef struct NodoRojoNegro *ABBRojoNegro;
 
 ABBRojoNegro vaciarABBRojoNegro(ABBRojoNegro T);
-Posicion buscar(ContenidoNodo X, ABBRojoNegro T);
+Posicion buscarABBRojoNegro(Lexema lexema, ABBRojoNegro T);
 Posicion buscar_minimo(ABBRojoNegro T);
 Posicion buscar_maximo(ABBRojoNegro T);
 ABBRojoNegro crearABBRojoNegro(void);
 ABBRojoNegro insertarABBRojoNegro(ContenidoNodo X, ABBRojoNegro T);
 ABBRojoNegro eliminar(ContenidoNodo X, ABBRojoNegro T);
-ContenidoNodo obtener_contenido(Posicion P);
+ContenidoNodo obtenerContenidoPosicionABBRojoNegro(Posicion P);
 void imprimirABBRojoNegro(ABBRojoNegro T);
 
 #endif // RED_BLACK_ABB

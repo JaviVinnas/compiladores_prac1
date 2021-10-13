@@ -69,8 +69,8 @@ all:
 ./Componentes/AnalizadorLexico/AnalizadorLexico.o: /usr/include/stdc-predef.h
 ./Componentes/AnalizadorSintactico/AnalizadorSintactico.o: ./Componentes/SistemaEntrada/SistemaEntrada.h
 ./Componentes/AnalizadorSintactico/AnalizadorSintactico.o: ./Componentes/TablaSimbolos/TablaSimbolos.h
-./Componentes/AnalizadorSintactico/AnalizadorSintactico.o: ./Componentes/AnalizadorLexico/AnalizadorLexico.h
 ./Componentes/AnalizadorSintactico/AnalizadorSintactico.o: ./ArchivosComunes/TuplaLexemaId/TuplaLexemaId.h
+./Componentes/AnalizadorSintactico/AnalizadorSintactico.o: ./Componentes/AnalizadorLexico/AnalizadorLexico.h
 ./Componentes/AnalizadorSintactico/AnalizadorSintactico.o: ./ArchivosComunes/Definiciones.h
 ./Componentes/AnalizadorSintactico/AnalizadorSintactico.o: ./ArchivosComunes/Utils/Utils.h
 ./Componentes/AnalizadorSintactico/AnalizadorSintactico.o: /usr/include/stdio.h
@@ -79,8 +79,8 @@ all:
 ./Componentes/SistemaEntrada/SistemaEntrada.o: ./Componentes/SistemaEntrada/SistemaEntrada.h
 ./Componentes/SistemaEntrada/SistemaEntrada.o: /usr/include/string.h
 ./Componentes/TablaSimbolos/TablaSimbolos.o: ./Componentes/TablaSimbolos/TablaSimbolos.h
-./Componentes/TablaSimbolos/TablaSimbolos.o: ./Componentes/TablaSimbolos/ABBRojoNegro/ABBRojoNegro.h
 ./Componentes/TablaSimbolos/TablaSimbolos.o: ./ArchivosComunes/TuplaLexemaId/TuplaLexemaId.h
+./Componentes/TablaSimbolos/TablaSimbolos.o: ./Componentes/TablaSimbolos/ABBRojoNegro/ABBRojoNegro.h
 ./Componentes/TablaSimbolos/TablaSimbolos.o: ./ArchivosComunes/Definiciones.h
 ./Componentes/TablaSimbolos/TablaSimbolos.o: ./ArchivosComunes/Utils/Utils.h
 ./Componentes/TablaSimbolos/TablaSimbolos.o: /usr/include/stdio.h
@@ -92,6 +92,6 @@ all:
 ./Componentes/TablaSimbolos/ABBRojoNegro/ABBRojoNegro.o: /usr/include/string.h
 ./Main/Main.o: ./Componentes/SistemaEntrada/SistemaEntrada.h
 ./Main/Main.o: ./Componentes/TablaSimbolos/TablaSimbolos.h
-./Main/Main.o: ./Componentes/AnalizadorLexico/AnalizadorLexico.h
 ./Main/Main.o: ./ArchivosComunes/TuplaLexemaId/TuplaLexemaId.h
+./Main/Main.o: ./Componentes/AnalizadorLexico/AnalizadorLexico.h
 ./Main/Main.o: ./Componentes/AnalizadorSintactico/AnalizadorSintactico.h

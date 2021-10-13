@@ -44,5 +44,10 @@
 #define DOCSTRING 337
 #define DUNDER_NAME 338
 #define TABULACION 339
+#define INT 340
+#define FLOAT 341
+#define MAS_IGUAL 342
+#define EXPONENCIAL 343
+#define MENOR_O_IGUAL 344
 
 #endif //DEFINICIONES_H

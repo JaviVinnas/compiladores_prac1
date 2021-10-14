@@ -4,7 +4,6 @@
 #include <string.h>
 #include <math.h>
 
-
 //----------------------------------------------------------------------------------------------------------------------
 // TIPOS DE DATOS
 
@@ -121,10 +120,9 @@ NombreBloque getBloqueOpuesto(NombreBloque nombreBloque)
  */
 char *crearStringEntreDosPunteros(char *punteroMenor, char *punteroMayor)
 {
-    char *string = malloc(sizeof(char) * (punteroMayor - punteroMenor + 2)); //+1 por si los punteros son iguales +1 para el caracter de fin de cadena
-    for (size_t i = 0; i < punteroMayor - punteroMenor; i++)                 // de cero hasta el puntero mayor
+    char *string = (char *) calloc(punteroMayor - punteroMenor + 2, sizeof(char)); //+1 por si los punteros son iguales +1 para el caracter de fin de cadena
+    for (size_t i = 0; i < punteroMayor - punteroMenor; i++)                      // de cero hasta el puntero mayor
         string[i] = punteroMenor[i];
-    string[punteroMayor - punteroMenor + 1] = '\0';
     return string;
 }
 
@@ -143,7 +141,7 @@ char *crearLexemaEntrePunterosDeLectura(SistemaEntrada S)
     else
     { // 2º caso => "inicio" y "delante" están en bloques distintos => el lexema está entre dos bloques (en dos partes)
         // PARTE 1 => desde "inicio" hasta el final del bloque en el que esté (SIN EL CENTINELA)
-        char *parte1 = crearStringEntreDosPunteros(S->inicio, nombreToBloque(S, nombreBloqueInicio) + BLOCK_SIZE - 1);
+        char *parte1 = crearStringEntreDosPunteros(S->inicio, nombreToBloque(S, nombreBloqueInicio) + BLOCK_SIZE);
         // PARTE 2 => desde el comienzo del bloque de "delante" hasta donde esté "delante" como tal
         char *parte2 = crearStringEntreDosPunteros(nombreToBloque(S, nombreBloqueDelantero), S->delantero);
         // construimos la cadena destino y la rellenamos con la concatenación las partes

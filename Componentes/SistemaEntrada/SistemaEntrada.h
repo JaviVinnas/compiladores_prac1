@@ -1,11 +1,10 @@
 #ifndef SIST_ENTRADA_H
 #define SIST_ENTRADA_H
 
-// El tamaño óptimo del bloque será el doble del lexema más largo,
+// El tamaño óptimo del bloque será el del lexema más largo,
 // para que en caso de leerlo y que "inicio" estuviera al final de un bloque (previo al centinela) PEOR CASO,
-// tener la garantía de que no perder la referencia del inicio de lexema
-#define LEXEMA_MAS_LARGO 82
-#define BLOCK_SIZE LEXEMA_MAS_LARGO * 2
+// tener la garantía de no perder la referencia del comienzo del lexema
+#define BLOCK_SIZE 82
 #define BLOCK_SIZE_WITH_GUARD BLOCK_SIZE + 1
 
 struct TipoSistemaEntrada;
@@ -19,7 +18,7 @@ void devolverCaracter(SistemaEntrada S);
 // efectua los cambios internos que tienen lugar cuando se reconoce un lexema y devuelve una cadena con el lexema reconocido
 char *lexemaEncontrado(SistemaEntrada S);
 // efectua los cambios internos que tienen lugar cuando se reconoce un lexema pero no construye una cadena que saca como output
-//útil cuando no nos interese el lexema pero no interesa el output
+//útil cuando no nos interese el lexema pero no el output
 void lexemaEncontradoSinOutput(SistemaEntrada S);
 // libera la memoria del sistema de entrada si hubiera
 void destruirSistemaEntrada(SistemaEntrada S);

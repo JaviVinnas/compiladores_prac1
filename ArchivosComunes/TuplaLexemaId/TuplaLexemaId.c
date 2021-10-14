@@ -34,7 +34,7 @@ int compareTuplas(TuplaLexemaId T1, TuplaLexemaId T2)
 
 void printTupla(TuplaLexemaId T)
 {
-    if (strchr(T->lexema, '>') != NULL || strchr(T->lexema, '<') != NULL)
+    if (strchr(T->lexema, '>') != NULL || strchr(T->lexema, '<') != NULL || strchr(T->lexema, '=') != NULL)
         printf("[%s,%d]\n", T->lexema, T->id);
     else if (strchr(T->lexema, ','))
         printf("<%s|%d>\n", T->lexema, T->id);

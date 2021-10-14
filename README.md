@@ -1,4 +1,21 @@
+# Analizador léxico para python
 
-# Hola
+## Caracteristicas del equipo donde se realizó el proyecto
 
-para insatalar makedepend: ```sudo apt install xutils-dev```
+* **Sistema operativo**: Linux Ubuntu 20.04.3 LTS ejecutado en un PC con Windows 10 mediante WSL2
+
+* **CPU**: Intel i7-7700HQ (8) @ 2.807GHz (arquitectura x86_64)
+
+* **Version del comando `make`**: GNU Make 4.2.1
+
+* **Version del comando `gcc`**: gcc (Ubuntu 9.3.0-17ubuntu1~20.04) 9.3.0
+
+## Instrucciones para la compilación y ejecución
+
+1. Para compilar el código situarse en la carpeta **donde está este documento** (y el Makefile) en una terminal linux (bash, zsh...)
+
+2. Ejecutar el comando `make` para generar un archivo compilado llamado `ejecutable`
+
+3. Damos los permisos a la ejecución del archivo con el comando `chmod 777 ./ejecutable`
+
+4. Para ejecutar el producto de la compilación hacemos `./ejecutable`

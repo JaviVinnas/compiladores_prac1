@@ -12,10 +12,11 @@ AnalizadorLexico crearAnalizadorLexico();
 
 /**
  * Obtiene el siguiente componente léxico del sistema de entrada (que se le pase por argumentos)
- * usando la tabla de símbolos (que se le pase por argumentos). Devuelve una referencia a una tupla que puede estar en la tabla de símbolos o no, así que mejor no borrarla.
+ * usando la tabla de símbolos (que se le pase por argumentos). Devuelve una referencia a una tupla.
  * */
 TuplaLexemaId siguienteComponenteLexico(AnalizadorLexico A, SistemaEntrada entrada, TablaSimbolos tablaSimbolos);
 
+//Destruye el analizador lexico y libera la memoria
 void destruirAnalizadorLexico(AnalizadorLexico A);
 
 #endif // ANALIZADOR_LEXICO_H

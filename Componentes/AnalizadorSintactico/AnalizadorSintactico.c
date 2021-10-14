@@ -11,10 +11,13 @@ void obtenerComponentesLexicos(AnalizadorLexico lexico, SistemaEntrada entrada, 
     TuplaLexemaId tupla;
     while (1)
     {
-        tupla = siguienteComponenteLexico(lexico,entrada, tabla);
+        tupla = siguienteComponenteLexico(lexico, entrada, tabla);
         printTupla(tupla);
         if (getTuplaId(tupla) == END_OF_FILE)
             break;
+        if (getTuplaId(tupla) < 300 || getTuplaId(tupla) > 334)// si no es una palabra reservada o un identificador (que puede estar en la tabla de símbolos) lo borramos
+            destruirTupla(tupla);
     }
+    destruirTupla(tupla);
     printSeparator();
 }

@@ -78,6 +78,7 @@ all:
 ./Componentes/SistemaEntrada/SistemaEntrada.o: /usr/include/stdlib.h
 ./Componentes/SistemaEntrada/SistemaEntrada.o: ./Componentes/SistemaEntrada/SistemaEntrada.h
 ./Componentes/SistemaEntrada/SistemaEntrada.o: /usr/include/string.h
+./Componentes/SistemaEntrada/SistemaEntrada.o: /usr/include/math.h
 ./Componentes/TablaSimbolos/TablaSimbolos.o: ./Componentes/TablaSimbolos/TablaSimbolos.h
 ./Componentes/TablaSimbolos/TablaSimbolos.o: ./ArchivosComunes/TuplaLexemaId/TuplaLexemaId.h
 ./Componentes/TablaSimbolos/TablaSimbolos.o: ./Componentes/TablaSimbolos/ABBRojoNegro/ABBRojoNegro.h

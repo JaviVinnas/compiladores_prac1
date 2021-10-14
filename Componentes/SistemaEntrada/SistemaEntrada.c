@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <SistemaEntrada.h>
 #include <string.h>
+#include <math.h>
+
 
 //----------------------------------------------------------------------------------------------------------------------
 // TIPOS DE DATOS
@@ -28,7 +30,6 @@ struct TipoSistemaEntrada
      * índices útiles (sin centinela) de 0 a BLOCK_SIZE -1 => blok[0] a blok[BLOCK_SIZE-1] => blok+0 a blok+BLOCK_SIZE-1
      */
     char blokA[BLOCK_SIZE_WITH_GUARD], blokB[BLOCK_SIZE_WITH_GUARD];
-    unsigned bloksCargados;
     unsigned bloquearCargaBloque : 1;
 };
 
@@ -68,7 +69,7 @@ char *nombreToBloque(SistemaEntrada S, NombreBloque nombreBloque)
 /**
  * Asigna a un bloque de los existentes un bloque de archivo
  * @param S puntero a la estructura de entrada.
- * @param nombreBloque nombre del bloque donde se almacenará el bloque de archivo. Puede ser [[a]] o bien [[b]]
+ * @param nombreBloque nombre del bloque donde se almacenará el bloque de archivo.
  */
 void cargarSiguienteBloqueDeArchivo(SistemaEntrada S, NombreBloque nombreBloque)
 {
@@ -76,12 +77,9 @@ void cargarSiguienteBloqueDeArchivo(SistemaEntrada S, NombreBloque nombreBloque)
     size_t numItemsLeidos = fread(bloque, sizeof(char), BLOCK_SIZE, S->archivo);
     if (numItemsLeidos < BLOCK_SIZE) // si llegasemos al fin del archivo (array "bloque" parcialmente lleno)
         bloque[numItemsLeidos] = '\0';
-    else // si no adelantamos del puntero del archivo
-        fseek(S->archivo, BLOCK_SIZE, SEEK_CUR);
-    S->bloksCargados++;
 }
 
-// dice en qué bloque está un puntero de lectura del sistema de entrada. Si no está en ninguno devuelve -1
+// dice en qué bloque está un puntero de lectura del sistema de entrada.
 NombreBloque getBloqueDondeEsta(SistemaEntrada S, NombrePunteroLectura nombrePunteroLectura)
 {
     char *punteroLectura = nombreToPunteroLectura(S, nombrePunteroLectura);
@@ -198,8 +196,6 @@ SistemaEntrada crearSistemaEntrada(char *nombre_archivo)
     if (S->archivo == NULL)
         // CORREGIR_ERROR: gestionar error en errores.
         return NULL;
-    // como no hemos leido ningún bloque todavía lo inilizalizamos a cero
-    S->bloksCargados = 0;
     // desbloqueamos la carga de bloque
     S->bloquearCargaBloque = 0;
     // movemos los dos primeros bloques a "blokA" y "blokB" respectivamente

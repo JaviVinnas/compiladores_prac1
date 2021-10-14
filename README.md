@@ -1,6 +1,6 @@
 # Analizador léxico para python
 
-## Caracteristicas del equipo donde se realizó el proyecto
+## Equipo donde se realizó el proyecto
 
 * **Sistema operativo**: Linux Ubuntu 20.04.3 LTS ejecutado en un PC con Windows 10 mediante WSL2
 
@@ -12,10 +12,12 @@
 
 ## Instrucciones para la compilación y ejecución
 
-1. Para compilar el código situarse en la carpeta **donde está este documento** (y el Makefile) en una terminal linux (bash, zsh...)
+1. Si no se hubiera hecho, se descomprime el archivo .zip.
 
-2. Ejecutar el comando `make` para generar un archivo compilado llamado `ejecutable`
+2. Para compilar el código situarse en la carpeta **donde está este documento** (y el Makefile) en una terminal linux (bash, zsh...)
 
-3. Damos los permisos a la ejecución del archivo con el comando `chmod 777 ./ejecutable`
+3. Ejecutar el comando `make` para generar un archivo compilado llamado `ejecutable`
 
-4. Para ejecutar el producto de la compilación hacemos `./ejecutable`
+4. Damos los permisos a la ejecución del archivo con el comando `chmod 777 ./ejecutable`
+
+5. Para ejecutar el producto de la compilación hacemos `./ejecutable`

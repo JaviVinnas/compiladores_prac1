@@ -3,6 +3,7 @@
 #include <SistemaEntrada.h>
 #include <string.h>
 #include <math.h>
+#include <Errores.h>
 
 //----------------------------------------------------------------------------------------------------------------------
 // TIPOS DE DATOS
@@ -46,7 +47,6 @@ char *nombreToPunteroLectura(SistemaEntrada S, NombrePunteroLectura nombrePunter
     {
         return S->delantero;
     }
-    // CORREGIR_ERROR: gestionar error en errores.h
     return NULL;
 }
 
@@ -61,7 +61,6 @@ char *nombreToBloque(SistemaEntrada S, NombreBloque nombreBloque)
     {
         return S->blokB;
     }
-    // CORREGIR_ERROR: gestionar error en errores.h
     return NULL;
 }
 
@@ -87,7 +86,6 @@ NombreBloque getBloqueDondeEsta(SistemaEntrada S, NombrePunteroLectura nombrePun
     else if (punteroLectura >= S->blokB && punteroLectura <= S->blokB + BLOCK_SIZE)
         return BloqueB;
     else
-        // CORREGIR_ERROR: gestionar error en errores.h
         return NingunBloque;
 }
 
@@ -120,7 +118,7 @@ NombreBloque getBloqueOpuesto(NombreBloque nombreBloque)
  */
 char *crearStringEntreDosPunteros(char *punteroMenor, char *punteroMayor)
 {
-    char *string = (char *) calloc(punteroMayor - punteroMenor + 2, sizeof(char)); //+1 por si los punteros son iguales +1 para el caracter de fin de cadena
+    char *string = (char *)calloc(punteroMayor - punteroMenor + 2, sizeof(char)); //+1 por si los punteros son iguales +1 para el caracter de fin de cadena
     for (size_t i = 0; i < punteroMayor - punteroMenor; i++)                      // de cero hasta el puntero mayor
         string[i] = punteroMenor[i];
     return string;
@@ -177,8 +175,7 @@ void gestionarAvanceDelantero(SistemaEntrada S)
         }
         else
         { // punteros de lectura en bloques diferentes
-            // CORREGIR_ERROR: gestionar error en errores.h
-            fprintf(stderr, "Overflow de las memorias del sistema de entrada (lexema más largo que las dos memorias juntas)");
+            printCompiladorError(OverflowBuffersEntrada);
         }
     }
 }
@@ -215,19 +212,23 @@ char siguienteCaracter(SistemaEntrada S)
 
 void devolverCaracter(SistemaEntrada S)
 {
-    if (S->delantero != S->inicio)
-    { // si los punteros de lectura apuntan a posiciones diferentes
-        if (S->delantero == nombreToBloque(S, getBloqueDondeEsta(S, PunteroDelantero)))
-        { //"delantero" está en la primera posición de su bloque (del bloque donde está)
-            // 1. Movemos delantero al final del otro bloque de memoria (el bloque donde no está)
-            S->delantero = nombreToBloque(S, getBloqueOpuesto(getBloqueDondeEsta(S, PunteroDelantero))) + BLOCK_SIZE - 1;
-            // 2. activamos la flag que bloquea la carga de bloques para no perder el bloque
-            S->bloquearCargaBloque = 1;
-        }
-        else
-        { //"delantero" puede retroceder una posición y se quedaría dentro del mismo bloque de memoria en el qye ya estaba (sin conflictos)
-            S->delantero--;
-        }
+    if (S->inicio == S->delantero)
+    {
+        printCompiladorError(EstadoIlegalSistemaEntradaAlRetroceder);
+        return;
+    }
+
+    // si los punteros de lectura apuntan a posiciones diferentes
+    if (S->delantero == nombreToBloque(S, getBloqueDondeEsta(S, PunteroDelantero)))
+    { //"delantero" está en la primera posición de su bloque (del bloque donde está)
+        // 1. Movemos delantero al final del otro bloque de memoria (el bloque donde no está)
+        S->delantero = nombreToBloque(S, getBloqueOpuesto(getBloqueDondeEsta(S, PunteroDelantero))) + BLOCK_SIZE - 1;
+        // 2. activamos la flag que bloquea la carga de bloques para no perder el bloque
+        S->bloquearCargaBloque = 1;
+    }
+    else
+    { //"delantero" puede retroceder una posición y se quedaría dentro del mismo bloque de memoria en el qye ya estaba (sin conflictos)
+        S->delantero--;
     }
 }
 

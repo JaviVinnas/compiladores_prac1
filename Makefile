@@ -56,6 +56,10 @@ all:
 ./ArchivosComunes/TuplaLexemaId/TuplaLexemaId.o: /usr/include/stdlib.h
 ./ArchivosComunes/Utils/Utils.o: ./ArchivosComunes/Utils/Utils.h
 ./ArchivosComunes/Utils/Utils.o: /usr/include/stdio.h /usr/include/stdlib.h
+./ArchivosComunes/Errores/Errores.o: /usr/include/stdio.h
+./ArchivosComunes/Errores/Errores.o: /usr/include/string.h
+./ArchivosComunes/Errores/Errores.o: /usr/include/stdlib.h
+./ArchivosComunes/Errores/Errores.o: ./ArchivosComunes/Errores/Errores.h
 ./Componentes/AnalizadorLexico/AnalizadorLexico.o: ./Componentes/AnalizadorLexico/AnalizadorLexico.h
 ./Componentes/AnalizadorLexico/AnalizadorLexico.o: ./ArchivosComunes/TuplaLexemaId/TuplaLexemaId.h
 ./Componentes/AnalizadorLexico/AnalizadorLexico.o: ./Componentes/SistemaEntrada/SistemaEntrada.h
@@ -79,6 +83,7 @@ all:
 ./Componentes/SistemaEntrada/SistemaEntrada.o: ./Componentes/SistemaEntrada/SistemaEntrada.h
 ./Componentes/SistemaEntrada/SistemaEntrada.o: /usr/include/string.h
 ./Componentes/SistemaEntrada/SistemaEntrada.o: /usr/include/math.h
+./Componentes/SistemaEntrada/SistemaEntrada.o: ./ArchivosComunes/Errores/Errores.h
 ./Componentes/TablaSimbolos/TablaSimbolos.o: ./Componentes/TablaSimbolos/TablaSimbolos.h
 ./Componentes/TablaSimbolos/TablaSimbolos.o: ./ArchivosComunes/TuplaLexemaId/TuplaLexemaId.h
 ./Componentes/TablaSimbolos/TablaSimbolos.o: ./Componentes/TablaSimbolos/ABBRojoNegro/ABBRojoNegro.h

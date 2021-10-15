@@ -25,8 +25,8 @@ struct TipoSistemaEntrada
     FILE *archivo;
     char *inicio, *delantero;
     /**
-     * índices de 0 a BLOCK_SIZE => blok[0] a blok[BLOCK_SIZE] => blok+0 a blok+BLOCK_SIZE
-     * índices útiles (sin centinela) de 0 a BLOCK_SIZE -1 => blok[0] a blok[BLOCK_SIZE-1] => blok+0 a blok+BLOCK_SIZE-1
+     * Índices de 0 a BLOCK_SIZE => blok[0] a blok[BLOCK_SIZE] => blok+0 a blok+BLOCK_SIZE
+     * Índices útiles (sin centinela) de 0 a BLOCK_SIZE -1 => blok[0] a blok[BLOCK_SIZE-1] => blok+0 a blok+BLOCK_SIZE-1
      */
     char blokA[BLOCK_SIZE_WITH_GUARD], blokB[BLOCK_SIZE_WITH_GUARD];
     unsigned bloquearCargaBloque : 1;

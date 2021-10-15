@@ -2,7 +2,7 @@
 
 ## Equipo donde se realizó el proyecto
 
-* **Sistema operativo**: Linux Ubuntu 20.04.3 LTS ejecutado en un PC con Windows 10 mediante WSL2
+* **Sistema operativo**: Linux Ubuntu 20.04.3 LTS ejecutado en un PC con Windows 10 mediante WSLv2
 
 * **CPU**: Intel i7-7700HQ (8) @ 2.807GHz (arquitectura x86_64)
 

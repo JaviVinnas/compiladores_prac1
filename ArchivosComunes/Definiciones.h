@@ -49,5 +49,6 @@
 #define MAS_IGUAL 342
 #define EXPONENCIAL 343
 #define MENOR_O_IGUAL 344
+#define IGUAL_IGUAL 344
 
 #endif //DEFINICIONES_H

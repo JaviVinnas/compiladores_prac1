@@ -3,9 +3,9 @@
 #include <stdlib.h>
 #include <Errores.h>
 
-void printCompiladorError(Error error)
+void printCompiladorError(ErrorCode error)
 {
-    char *baseMessage = "Error del compilador >> ";
+    char *baseMessage = "ErrorCode del compilador >> ";
     char *contextMessage;
     switch (error)
     {

@@ -188,7 +188,7 @@ void reconoceDunderName(AnalizadorLexico A, SistemaEntrada entrada, TablaSimbolo
     }
 
     if (error)
-    {
+    { //reconocemos un identificador
         A->tupla = buscarIdEnTablaSimbolos(tablaSimbolos, lexemaEncontrado(entrada));
     }
     else
@@ -471,8 +471,8 @@ void reconoceMas(AnalizadorLexico A, SistemaEntrada entrada)
 void reconoceAsterisco(AnalizadorLexico A, SistemaEntrada entrada)
 {
 
-    unsigned estado = 0, aceptadoIgual = 0, aceptadoIgualIgual = 0;
-    while (!aceptadoIgual && !aceptadoIgualIgual)
+    unsigned estado = 0, aceptadoAsterisco = 0, aceptadoAsteriscoAsterisco = 0;
+    while (!aceptadoAsterisco && !aceptadoAsteriscoAsterisco)
     {
         A->caracter = siguienteCaracter(entrada);
         switch (estado)
@@ -480,16 +480,16 @@ void reconoceAsterisco(AnalizadorLexico A, SistemaEntrada entrada)
         case 0:
             if (A->caracter == '*')
             {
-                aceptadoIgualIgual = 1;
+                aceptadoAsteriscoAsterisco = 1;
             }
             else
             {
                 devolverCaracter(entrada);
-                aceptadoIgual = 1;
+                aceptadoAsterisco = 1;
             }
         }
     }
-    if (aceptadoIgual)
+    if (aceptadoAsterisco)
     {
         lexemaEncontradoSinOutput(entrada);
         A->tupla = crearTupla("*", (int)'*');
@@ -505,8 +505,8 @@ void reconoceAsterisco(AnalizadorLexico A, SistemaEntrada entrada)
 void reconoceMenor(AnalizadorLexico A, SistemaEntrada entrada)
 {
 
-    unsigned estado = 0, aceptadoIgual = 0, aceptadoIgualIgual = 0;
-    while (!aceptadoIgual && !aceptadoIgualIgual)
+    unsigned estado = 0, aceptadoMenor = 0, aceptadoMenorIgual = 0;
+    while (!aceptadoMenor && !aceptadoMenorIgual)
     {
         A->caracter = siguienteCaracter(entrada);
         switch (estado)
@@ -514,16 +514,16 @@ void reconoceMenor(AnalizadorLexico A, SistemaEntrada entrada)
         case 0:
             if (A->caracter == '=')
             {
-                aceptadoIgualIgual = 1;
+                aceptadoMenorIgual = 1;
             }
             else
             {
                 devolverCaracter(entrada);
-                aceptadoIgual = 1;
+                aceptadoMenor = 1;
             }
         }
     }
-    if (aceptadoIgual)
+    if (aceptadoMenor)
     {
         lexemaEncontradoSinOutput(entrada);
         A->tupla = crearTupla("<", (int)'<');

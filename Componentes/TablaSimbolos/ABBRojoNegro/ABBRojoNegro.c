@@ -18,7 +18,7 @@ struct NodoRojoNegro
     TipoColor color;
 };
 
-static Posicion NodoNulo = NULL; //necesita inicialización -> nodo que actua de nulo y que estará en las hojas
+static Posicion NodoNulo = NULL; // necesita inicialización -> nodo que actua de nulo y que estará en las hojas
 
 /* Initialization procedure */
 ABBRojoNegro crearABBRojoNegro(void)
@@ -30,18 +30,18 @@ ABBRojoNegro crearABBRojoNegro(void)
         NodoNulo = malloc(sizeof(struct NodoRojoNegro));
         if (NodoNulo == NULL)
             printf("Out of space!!!");
-        NodoNulo->izq = NodoNulo->der = NodoNulo; //se tiene a si mismo como contenido (fin del arbol)
-        NodoNulo->color = Negro;                  //siempre negro como la raiz
+        NodoNulo->izq = NodoNulo->der = NodoNulo; // se tiene a si mismo como contenido (fin del arbol)
+        NodoNulo->color = Negro;                  // siempre negro como la raiz
         NodoNulo->contenido = crearTupla(NULL, 123);
     }
 
-    //se crea el nodo raiz del árbol
+    // se crea el nodo raiz del árbol
     T = malloc(sizeof(struct NodoRojoNegro));
     if (T == NULL)
         printf("Out of space!!!");
     T->contenido = crearTupla("    ", NegInfinity);
     T->izq = T->der = NodoNulo;
-    T->color = Negro; //raiz siempre negra
+    T->color = Negro; // raiz siempre negra
 
     return T;
 }
@@ -99,12 +99,12 @@ Posicion buscarABBRojoNegro(Lexema lexema, ABBRojoNegro T)
 {
     if (T == NodoNulo)
         return NULL;
-    //buscamos y ordenamos por el lexema
-    if (strcmp(lexema, getTuplaLexema(T->contenido)) < 0) //si es menor
+    // buscamos y ordenamos por el lexema
+    if (strcmp(lexema, getTuplaLexema(T->contenido)) < 0) // si es menor
         return buscarABBRojoNegro(lexema, T->izq);
-    else if (strcmp(lexema, getTuplaLexema(T->contenido)) > 0) //si es mayor
+    else if (strcmp(lexema, getTuplaLexema(T->contenido)) > 0) // si es mayor
         return buscarABBRojoNegro(lexema, T->der);
-    else //si son iguales
+    else // si son iguales
         return T;
 }
 
@@ -215,7 +215,7 @@ ABBRojoNegro insertarABBRojoNegro(ContenidoNodo Item, ABBRojoNegro T)
     X->contenido = Item;
     X->izq = X->der = NodoNulo;
 
-    if (compareTuplas(Item, P->contenido) < 0) //si la tupla hija es menor que la tupla padre va a la izquierda (nunca cuando insertamos la primera vez)
+    if (compareTuplas(Item, P->contenido) < 0) // si la tupla hija es menor que la tupla padre va a la izquierda (nunca cuando insertamos la primera vez)
         P->izq = X;
     else
         P->der = X;

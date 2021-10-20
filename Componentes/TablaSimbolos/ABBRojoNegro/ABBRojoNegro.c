@@ -80,6 +80,7 @@ static ABBRojoNegro MakeEmptyRec(ABBRojoNegro T)
     {
         MakeEmptyRec(T->izq);
         MakeEmptyRec(T->der);
+        destruirTupla(T->contenido);
         free(T);
     }
     return NodoNulo;
@@ -88,7 +89,10 @@ static ABBRojoNegro MakeEmptyRec(ABBRojoNegro T)
 ABBRojoNegro vaciarABBRojoNegro(ABBRojoNegro T)
 {
     T->der = MakeEmptyRec(T->der);
-    return T;
+    T->izq = MakeEmptyRec(T->izq);
+    destruirTupla(T->contenido);
+    free(T);
+    return NULL;
 }
 
 Posicion buscarABBRojoNegro(Lexema lexema, ABBRojoNegro T)

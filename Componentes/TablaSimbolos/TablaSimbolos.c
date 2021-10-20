@@ -66,6 +66,7 @@ TuplaLexemaId buscarIdEnTablaSimbolos(TablaSimbolos T, Lexema identificador)
     Posicion nodoArbol = buscarABBRojoNegro(identificador, T->almacenamiento);
     if (nodoArbol != NULL)
     { //si el identificador ya está en el árbol (como palabra reservada o como identificador)
+        free(identificador);
         return obtenerContenidoPosicionABBRojoNegro(nodoArbol);
     }
     { //si no, hay que crear la tupla y meterla en el árbol

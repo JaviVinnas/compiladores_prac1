@@ -37,7 +37,7 @@ FUENTES=\
 ./Main/Main.c
 
 ejecutable: $(OBJETOS)
-	gcc -Wall -g $(OBJETOS) -o ejecutable
+	gcc -Wall -g -lfl $(OBJETOS) -o ejecutable
 
 depend:
 	makedepend $(CFLAGS) $(FUENTES)

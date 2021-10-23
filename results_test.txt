@@ -1,0 +1,585 @@
+Un comentario: # -*- coding: utf-8 -*-
+
+Un DOCSTRING: """
+Created on Tue Sep 15 12:16:21 2015
+"""
+Un símbolo: 
+
+Un símbolo: 
+
+Un identificador literal: import
+Un identificador literal: scipy
+Un símbolo: .
+Un identificador literal: stats
+Un identificador literal: as
+Un identificador literal: st
+Un símbolo: 
+
+Un identificador literal: import
+Un identificador literal: math
+Un símbolo: 
+
+Un identificador literal: import
+Un identificador literal: random
+Un símbolo: 
+
+Un símbolo: 
+
+Un identificador literal: wilcoxon_table
+Un símbolo: =
+Un símbolo: {
+Un FLOAT_NUMBER: 5e-2
+Un símbolo: :
+Un símbolo: {
+Un integer: 6
+Un símbolo: :
+Un integer: 0
+Un símbolo: ,
+Un integer: 7
+Un símbolo: :
+Un integer: 2
+Un símbolo: ,
+Un integer: 8
+Un símbolo: :
+Un integer: 4
+Un símbolo: ,
+Un integer: 9
+Un símbolo: :
+Un integer: 6
+Un símbolo: ,
+Un integer: 10
+Un símbolo: :
+Un integer: 8
+Un símbolo: ,
+Un integer: 11
+Un símbolo: :
+Un integer: 11
+Un símbolo: ,
+Un integer: 12
+Un símbolo: :
+Un integer: 14
+Un símbolo: }
+Un símbolo: ,
+Un símbolo: 
+
+Un tab:     
+Un tab:     
+Un tab:     
+Un tab:     
+Un FLOAT_NUMBER: 1e-2
+Un símbolo: :
+Un símbolo: {
+Un integer: 7
+Un símbolo: :
+Un integer: 0
+Un símbolo: ,
+Un integer: 8
+Un símbolo: :
+Un integer: 2
+Un símbolo: ,
+Un integer: 9
+Un símbolo: :
+Un integer: 3
+Un símbolo: }
+Un símbolo: }
+Un símbolo: 
+
+Un símbolo: 
+
+Un identificador literal: def
+Un identificador literal: wilcoxon_test
+Un símbolo: (
+Un identificador literal: a
+Un símbolo: ,
+Un identificador literal: b
+Un símbolo: ,
+Un identificador literal: alpha
+Un símbolo: =
+Un FLOAT_NUMBER: .05
+Un símbolo: )
+Un símbolo: :
+Un símbolo: 
+
+Un tab:     
+Un DOCSTRING: """
+    Performs the Wilcoxon Rank non-parametric test for two algorithms.
+    """
+Un símbolo: 
+
+Un tab:     
+Un identificador literal: N
+Un símbolo: =
+Un identificador literal: len
+Un símbolo: (
+Un identificador literal: a
+Un símbolo: )
+Un comentario: # Number of datasets
+
+Un tab:     
+Un comentario: # Compute the differences and keep the signs
+
+Un tab:     
+Un identificador literal: differences
+Un símbolo: ,
+Un identificador literal: signs
+Un símbolo: =
+Un símbolo: (
+Un símbolo: [
+Un identificador literal: abs
+Un símbolo: (
+Un identificador literal: a
+Un símbolo: [
+Un identificador literal: i
+Un símbolo: ]
+Un símbolo: -
+Un identificador literal: b
+Un símbolo: [
+Un identificador literal: i
+Un símbolo: ]
+Un símbolo: )
+Un identificador literal: for
+Un identificador literal: i
+Un identificador literal: in
+Un identificador literal: xrange
+Un símbolo: (
+Un identificador literal: N
+Un símbolo: )
+Un símbolo: ]
+Un símbolo: ,
+Un símbolo: 
+
+Un tab:     
+Un tab:     
+Un tab:     
+Un tab:     
+Un tab:     
+Un tab:     
+Un símbolo: [
+Un identificador literal: a
+Un símbolo: [
+Un identificador literal: i
+Un símbolo: ]
+Un símbolo: -
+Un identificador literal: b
+Un símbolo: [
+Un identificador literal: i
+Un símbolo: ]
+Un identificador literal: for
+Un identificador literal: i
+Un identificador literal: in
+Un identificador literal: xrange
+Un símbolo: (
+Un identificador literal: N
+Un símbolo: )
+Un símbolo: ]
+Un símbolo: )
+Un símbolo: 
+
+Un tab:     
+Un identificador literal: tmp
+Un símbolo: =
+Un identificador literal: sorted
+Un símbolo: (
+Un identificador literal: differences
+Un símbolo: )
+Un símbolo: 
+
+Un tab:     
+Un comentario: # The rank is the median between the index of the first element equal
+
+Un tab:     
+Un comentario: # to v in tmp (index(v)+1) and the index of the last element equal to v
+
+Un tab:     
+Un comentario: # (index(v)+count(v))
+
+Un tab:     
+Un identificador literal: ranks
+Un símbolo: =
+Un símbolo: [
+Un símbolo: (
+Un identificador literal: tmp
+Un símbolo: .
+Un identificador literal: count
+Un símbolo: (
+Un identificador literal: v
+Un símbolo: )
+Un símbolo: +
+Un identificador literal: tmp
+Un símbolo: .
+Un identificador literal: index
+Un símbolo: (
+Un identificador literal: v
+Un símbolo: )
+Un símbolo: *
+Un integer: 2
+Un símbolo: +
+Un integer: 0x1
+Un símbolo: )
+Un símbolo: /
+Un FLOAT_NUMBER: 2e0
+Un identificador literal: for
+Un identificador literal: v
+Un identificador literal: in
+Un identificador literal: differences
+Un símbolo: ]
+Un símbolo: 
+
+Un tab:     
+Un comentario: # Add up the ranks for positive and negative signs
+
+Un tab:     
+Un identificador literal: r_plus
+Un símbolo: =
+Un identificador literal: r_minus
+Un símbolo: =
+Un FLOAT_NUMBER: 0.0
+Un símbolo: 
+
+Un tab:     
+Un identificador literal: for
+Un identificador literal: i
+Un identificador literal: in
+Un identificador literal: xrange
+Un símbolo: (
+Un identificador literal: N
+Un símbolo: )
+Un símbolo: :
+Un símbolo: 
+
+Un tab:     
+Un tab:     
+Un identificador literal: if
+Un identificador literal: signs
+Un símbolo: [
+Un identificador literal: i
+Un símbolo: ]
+Un símbolo: <
+Un integer: 0
+Un símbolo: :
+Un símbolo: 
+
+Un tab:     
+Un tab:     
+Un tab:     
+Un identificador literal: r_minus
+Un símbolo: +
+Un símbolo: =
+Un identificador literal: ranks
+Un símbolo: [
+Un identificador literal: i
+Un símbolo: ]
+Un símbolo: 
+
+Un tab:     
+Un tab:     
+Un identificador literal: elif
+Un identificador literal: signs
+Un símbolo: [
+Un identificador literal: i
+Un símbolo: ]
+Un símbolo: >
+Un integer: 0
+Un símbolo: :
+Un símbolo: 
+
+Un tab:     
+Un tab:     
+Un tab:     
+Un identificador literal: r_plus
+Un símbolo: +
+Un símbolo: =
+Un identificador literal: ranks
+Un símbolo: [
+Un identificador literal: i
+Un símbolo: ]
+Un símbolo: 
+
+Un tab:     
+Un tab:     
+Un identificador literal: else
+Un símbolo: :
+Un símbolo: 
+
+Un tab:     
+Un tab:     
+Un tab:     
+Un identificador literal: r_minus
+Un símbolo: +
+Un símbolo: =
+Un identificador literal: ranks
+Un símbolo: [
+Un identificador literal: i
+Un símbolo: ]
+Un símbolo: *
+Un integer: 2
+Un símbolo: *
+Un símbolo: *
+Un símbolo: -
+Un integer: 1
+Un símbolo: 
+
+Un tab:     
+Un tab:     
+Un tab:     
+Un identificador literal: r_plus
+Un símbolo: +
+Un símbolo: =
+Un identificador literal: ranks
+Un símbolo: [
+Un identificador literal: i
+Un símbolo: ]
+Un símbolo: /
+Un FLOAT_NUMBER: 2.
+Un símbolo: 
+
+Un tab:     
+Un comentario: # Compute the minimum of both sums
+
+Un tab:     
+Un identificador literal: T
+Un símbolo: =
+Un identificador literal: min
+Un símbolo: (
+Un símbolo: [
+Un identificador literal: r_plus
+Un símbolo: ,
+Un identificador literal: r_minus
+Un símbolo: ]
+Un símbolo: )
+Un símbolo: 
+
+Un tab:     
+Un comentario: # Check if it can be approximated by a gaussian distribution
+
+Un tab:     
+Un identificador literal: if
+Un identificador literal: N
+Un símbolo: <
+Un símbolo: =
+Un integer: 30
+Un símbolo: :
+Un símbolo: 
+
+Un tab:     
+Un tab:     
+Un identificador literal: return
+Un símbolo: {
+Un string literal: "result"
+Un símbolo: :
+Un identificador literal: T
+Un símbolo: >
+Un identificador literal: wilcoxon_table
+Un símbolo: [
+Un identificador literal: alpha
+Un símbolo: ]
+Un símbolo: [
+Un identificador literal: N
+Un símbolo: ]
+Un símbolo: ,
+Un símbolo: 
+
+Un tab:     
+Un tab:     
+Un tab:     
+Un tab:     
+Un string literal: "statistic"
+Un símbolo: :
+Un identificador literal: T
+Un símbolo: ,
+Un símbolo: 
+
+Un tab:     
+Un tab:     
+Un tab:     
+Un tab:     
+Un string literal: "critical"
+Un símbolo: :
+Un identificador literal: wilcoxon_table
+Un símbolo: [
+Un identificador literal: alpha
+Un símbolo: ]
+Un símbolo: [
+Un identificador literal: N
+Un símbolo: ]
+Un símbolo: }
+Un símbolo: 
+
+Un tab:     
+Un identificador literal: else
+Un símbolo: :
+Un símbolo: 
+
+Un tab:     
+Un tab:     
+Un identificador literal: z
+Un símbolo: =
+Un símbolo: (
+Un identificador literal: T
+Un símbolo: -
+Un identificador literal: N
+Un símbolo: *
+Un símbolo: (
+Un identificador literal: N
+Un símbolo: +
+Un integer: 1
+Un símbolo: )
+Un símbolo: /
+Un integer: 4
+Un símbolo: )
+Un símbolo: /
+Un identificador literal: math
+Un símbolo: .
+Un identificador literal: sqrt
+Un símbolo: (
+Un identificador literal: N
+Un símbolo: *
+Un símbolo: (
+Un identificador literal: N
+Un símbolo: +
+Un integer: 1
+Un símbolo: )
+Un símbolo: *
+Un símbolo: (
+Un integer: 2
+Un símbolo: *
+Un identificador literal: N
+Un símbolo: +
+Un integer: 1
+Un símbolo: )
+Un símbolo: /
+Un integer: 24
+Un símbolo: )
+Un símbolo: 
+
+Un tab:     
+Un tab:     
+Un identificador literal: return
+Un símbolo: {
+Un string literal: "result"
+Un símbolo: :
+Un identificador literal: st
+Un símbolo: .
+Un identificador literal: zprob
+Un símbolo: (
+Un identificador literal: z
+Un símbolo: )
+Un símbolo: *
+Un integer: 2
+Un símbolo: >
+Un identificador literal: alpha
+Un símbolo: ,
+Un símbolo: 
+
+Un tab:     
+Un tab:     
+Un tab:     
+Un tab:     
+Un string literal: "statistic"
+Un símbolo: :
+Un identificador literal: z
+Un símbolo: ,
+Un símbolo: 
+
+Un tab:     
+Un tab:     
+Un tab:     
+Un tab:     
+Un string literal: "critical"
+Un símbolo: :
+Un identificador literal: st
+Un símbolo: .
+Un identificador literal: zprob
+Un símbolo: (
+Un identificador literal: z
+Un símbolo: )
+Un símbolo: }
+Un símbolo: 
+
+Un símbolo: 
+
+Un identificador literal: if
+Un dunder name: __name__
+Un símbolo: =
+Un símbolo: =
+Un string literal: '__main__'
+Un símbolo: :
+Un símbolo: 
+
+Un tab:     
+Un identificador literal: N
+Un símbolo: =
+Un integer: 12
+Un símbolo: 
+
+Un tab:     
+Un identificador literal: a
+Un símbolo: =
+Un símbolo: [
+Un identificador literal: random
+Un símbolo: .
+Un identificador literal: randrange
+Un símbolo: (
+Un integer: 75
+Un símbolo: ,
+Un integer: 95
+Un símbolo: ,
+Un integer: 1
+Un símbolo: )
+Un símbolo: /
+Un FLOAT_NUMBER: 1e2
+Un identificador literal: for
+Un identificador literal: i
+Un identificador literal: in
+Un identificador literal: xrange
+Un símbolo: (
+Un identificador literal: N
+Un símbolo: )
+Un símbolo: ]
+Un símbolo: 
+
+Un tab:     
+Un identificador literal: b
+Un símbolo: =
+Un símbolo: [
+Un identificador literal: random
+Un símbolo: .
+Un identificador literal: randrange
+Un símbolo: (
+Un integer: 75
+Un símbolo: ,
+Un integer: 95
+Un símbolo: ,
+Un integer: 1
+Un símbolo: )
+Un símbolo: /
+Un FLOAT_NUMBER: 1e2
+Un identificador literal: for
+Un identificador literal: i
+Un identificador literal: in
+Un identificador literal: xrange
+Un símbolo: (
+Un identificador literal: N
+Un símbolo: )
+Un símbolo: ]
+Un símbolo: 
+
+Un tab:     
+Un identificador literal: if
+Un identificador literal: not
+Un identificador literal: wilcoxon_test
+Un símbolo: (
+Un identificador literal: a
+Un símbolo: ,
+Un identificador literal: b
+Un símbolo: )
+Un símbolo: [
+Un string literal: 'result'
+Un símbolo: ]
+Un símbolo: :
+Un símbolo: 
+
+Un tab:     
+Un tab:     
+Un identificador literal: print
+Un string literal: 'Result differences are "statistically significant"'

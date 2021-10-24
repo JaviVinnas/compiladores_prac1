@@ -2,6 +2,19 @@
 %{
 /* se necesita esto para la llamada a atof() m´as abajo */
 #include <math.h>
+#include <TuplaLexemaId.h>
+#include <Flex.h>
+#include <Definiciones.h>
+
+struct TipoFlex
+{
+    TuplaLexemaId tupla;
+    TablaSimbolos tabla;
+};
+
+/*Variable global que actúa como struct de flex*/
+Flex currentFlex = NULL;
+
 %}
 /*Definimos comentarios monolinea*/
 
@@ -52,76 +65,105 @@ IDENTIFICADOR  [[:alpha:]]([[:alnum:]]|_)*
 
 %%
 
+<<EOF>> {
+    currentFlex->tupla = crearTupla("--FIN DEL ARCHIVO--", END_OF_FILE);
+    return 1;
+}
+
 {MAS_IGUAL} {
-    printf( "Un MAS_IGUAL: %s\n", yytext);
+    currentFlex->tupla = crearTupla("+=", MAS_IGUAL);
+    return 1;
 }
 
 {MENOR_IGUAL} {
-    printf( "Un MENOR_IGUAL: %s\n", yytext);
+    currentFlex->tupla = crearTupla("<=", MENOR_O_IGUAL);
+    return 1;
 }
 
 {EXPONENTIAL_OPERATOR}  {
-    printf( "Un EXPONENTIAL_OPERATOR: %s\n", yytext);
+    currentFlex->tupla = crearTupla("**", EXPONENCIAL);
+    return 1;
 }
 
 {DOUBLE_EQUAL}  {
-    printf( "Un DOUBLE_EQUAL: %s\n", yytext);
+    currentFlex->tupla = crearTupla("==", IGUAL_IGUAL);
+    return 1;
 }
 
-
-
 {INTEGER}   {
-    printf( "Un integer: %s\n", yytext);
+    currentFlex->tupla = crearTupla(strdup(yytext), INT);
+    return 1;
 }
 
 {FLOAT_NUMBER}  {
-    printf( "Un FLOAT_NUMBER: %s\n", yytext);
+    currentFlex->tupla = crearTupla(strdup(yytext), FLOAT);
+    return 1;
 }
 
 {DOCSTRING}  {
-    printf( "Un DOCSTRING: %s\n", yytext);
+    currentFlex->tupla = crearTupla("DOCSTRING", DOCSTRING);
+    return 1;
 }
 
 {STRING_LITERAL}  {
-    printf( "Un string literal: %s\n", yytext);
+    currentFlex->tupla = crearTupla(strdup(yytext), STRING_LITERAL);
+    return 1;
 }
 
 {IDENTIFICADOR}  {
-    printf( "Un identificador: %s\n", yytext);
+    currentFlex->tupla = buscarIdEnTablaSimbolos(currentFlex->tabla, strdup(yytext));
+    return 1;
 }
 
 {DUNDER_NAME}  {
-    printf( "Un dunder name: %s\n", yytext);
+    currentFlex->tupla = crearTupla(strdup(yytext), DUNDER_NAME);
+    return 1;
 }
 
 {RETORNO_DE_CARRO}  {
-    printf( "Un RETORNO_DE_CARRO: (No se pone)\n");
+    currentFlex->tupla = crearTupla("ENTER", (int)'\n');
+    return 1;
 }
-
-
 
 {SIMBOLO}   {
-    printf( "Un símbolo: %s\n", yytext );
+    char* monoCharString = strdup(yytext);
+    currentFlex->tupla = crearTupla(monoCharString, (int)monoCharString[0]);
+    return 1;
 }
-{COMMENT}   printf( "Un comentario: %s\n", yytext );
 
-{TAB} printf( "Un tab: %s\n", yytext );
+{COMMENT}   /*Ignoramos los comentarios*/
+
+
+
+{TAB} {
+    currentFlex->tupla = crearTupla("TABULACION", TABULACION);
+    return 1;
+}
+
 {SPACES}    /* se come los espacios en blanco */
+
 .   printf( "Caracter no reconocido: %s\n", yytext );
 
 %%
 
-int main( argc, argv )
-int argc;
-char **argv;
+Flex crearFlex(char *nombreFichero)
 {
-++argv, --argc; /* se salta el nombre del programa */
-if ( argc > 0 )
-    yyin = fopen( argv[0], "r" );
-else
-    yyin = stdin;
-yylex();
-return 0;
+    Flex F = malloc(sizeof(struct TipoFlex));
+    F->tupla = NULL;
+    yyin = fopen(nombreFichero, "r");
+    return F;
 }
+
+TuplaLexemaId siguienteComponenteLexico(Flex F,  TablaSimbolos tablaSimbolos){
+    F->tabla = tablaSimbolos;
+    currentFlex = F;
+    yylex();
+    return F->tupla;
+}
+
+void destruirFlex(Flex F){
+    free(F);
+}
+
 
 

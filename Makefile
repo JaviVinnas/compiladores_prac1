@@ -2,14 +2,15 @@
 #OBJETOS -> los archivos *.c, pero cambiándoles la extensión por .o con la ruta desde donde está el makefile (la raíz del proyecto)
 #FUENTES -> los archivos *.c con la ruta desde donde está el makefile (la raíz del proyecto)
 
+FLEX_FILE=./Componentes/FLEX/Flex
+
 CFLAGS=-g \
 -I./ArchivosComunes \
 -I./ArchivosComunes/TuplaLexemaId \
 -I./ArchivosComunes/Errores \
 -I./ArchivosComunes/Utils \
--I./Componentes/AnalizadorLexico \
+-I./Componentes/FLEX \
 -I./Componentes/AnalizadorSintactico \
--I./Componentes/SistemaEntrada \
 -I./Componentes/TablaSimbolos \
 -I./Componentes/TablaSimbolos/ABBRojoNegro \
 -I./Main
@@ -18,9 +19,8 @@ OBJETOS=\
 ./ArchivosComunes/TuplaLexemaId/TuplaLexemaId.o \
 ./ArchivosComunes/Utils/Utils.o \
 ./ArchivosComunes/Errores/Errores.o \
-./Componentes/AnalizadorLexico/AnalizadorLexico.o \
+$(FLEX_FILE).o \
 ./Componentes/AnalizadorSintactico/AnalizadorSintactico.o \
-./Componentes/SistemaEntrada/SistemaEntrada.o \
 ./Componentes/TablaSimbolos/TablaSimbolos.o \
 ./Componentes/TablaSimbolos/ABBRojoNegro/ABBRojoNegro.o \
 ./Main/Main.o
@@ -29,22 +29,28 @@ FUENTES=\
 ./ArchivosComunes/TuplaLexemaId/TuplaLexemaId.c \
 ./ArchivosComunes/Utils/Utils.c \
 ./ArchivosComunes/Errores/Errores.c \
-./Componentes/AnalizadorLexico/AnalizadorLexico.c \
+$(FLEX_FILE).c \
 ./Componentes/AnalizadorSintactico/AnalizadorSintactico.c \
-./Componentes/SistemaEntrada/SistemaEntrada.c \
 ./Componentes/TablaSimbolos/TablaSimbolos.c \
 ./Componentes/TablaSimbolos/ABBRojoNegro/ABBRojoNegro.c \
 ./Main/Main.c
 
+
+
 ejecutable: $(OBJETOS)
 	gcc -Wall -g -lfl $(OBJETOS) -o ejecutable
+
+build_flex:
+	flex --outfile=$(FLEX_FILE).c $(FLEX_FILE).l
 
 depend:
 	makedepend $(CFLAGS) $(FUENTES)
 
 all:
 	$(MAKE) depend
+	$(MAKE) build_flex
 	$(MAKE) ejecutable
+
 
 
 #----------------------------------------------------------------------------------------------------------------------
@@ -60,30 +66,21 @@ all:
 ./ArchivosComunes/Errores/Errores.o: /usr/include/string.h
 ./ArchivosComunes/Errores/Errores.o: /usr/include/stdlib.h
 ./ArchivosComunes/Errores/Errores.o: ./ArchivosComunes/Errores/Errores.h
-./Componentes/AnalizadorLexico/AnalizadorLexico.o: ./Componentes/AnalizadorLexico/AnalizadorLexico.h
-./Componentes/AnalizadorLexico/AnalizadorLexico.o: ./ArchivosComunes/TuplaLexemaId/TuplaLexemaId.h
-./Componentes/AnalizadorLexico/AnalizadorLexico.o: ./Componentes/SistemaEntrada/SistemaEntrada.h
-./Componentes/AnalizadorLexico/AnalizadorLexico.o: ./Componentes/TablaSimbolos/TablaSimbolos.h
-./Componentes/AnalizadorLexico/AnalizadorLexico.o: ./ArchivosComunes/Definiciones.h
-./Componentes/AnalizadorLexico/AnalizadorLexico.o: ./ArchivosComunes/Utils/Utils.h
-./Componentes/AnalizadorLexico/AnalizadorLexico.o: /usr/include/stdio.h
-./Componentes/AnalizadorLexico/AnalizadorLexico.o: /usr/include/stdlib.h
-./Componentes/AnalizadorLexico/AnalizadorLexico.o: /usr/include/ctype.h
-./Componentes/AnalizadorLexico/AnalizadorLexico.o: /usr/include/features.h
-./Componentes/AnalizadorLexico/AnalizadorLexico.o: /usr/include/stdc-predef.h
-./Componentes/AnalizadorSintactico/AnalizadorSintactico.o: ./Componentes/SistemaEntrada/SistemaEntrada.h
+./Componentes/FLEX/Flex.o: /usr/include/stdio.h /usr/include/string.h
+./Componentes/FLEX/Flex.o: /usr/include/errno.h /usr/include/features.h
+./Componentes/FLEX/Flex.o: /usr/include/stdc-predef.h /usr/include/stdlib.h
+./Componentes/FLEX/Flex.o: /usr/include/math.h
+./Componentes/FLEX/Flex.o: ./ArchivosComunes/TuplaLexemaId/TuplaLexemaId.h
+./Componentes/FLEX/Flex.o: ./Componentes/FLEX/Flex.h
+./Componentes/FLEX/Flex.o: ./Componentes/TablaSimbolos/TablaSimbolos.h
+./Componentes/FLEX/Flex.o: ./ArchivosComunes/Definiciones.h
+./Componentes/FLEX/Flex.o: /usr/include/unistd.h
 ./Componentes/AnalizadorSintactico/AnalizadorSintactico.o: ./Componentes/TablaSimbolos/TablaSimbolos.h
 ./Componentes/AnalizadorSintactico/AnalizadorSintactico.o: ./ArchivosComunes/TuplaLexemaId/TuplaLexemaId.h
-./Componentes/AnalizadorSintactico/AnalizadorSintactico.o: ./Componentes/AnalizadorLexico/AnalizadorLexico.h
+./Componentes/AnalizadorSintactico/AnalizadorSintactico.o: ./Componentes/FLEX/Flex.h
 ./Componentes/AnalizadorSintactico/AnalizadorSintactico.o: ./ArchivosComunes/Definiciones.h
 ./Componentes/AnalizadorSintactico/AnalizadorSintactico.o: ./ArchivosComunes/Utils/Utils.h
 ./Componentes/AnalizadorSintactico/AnalizadorSintactico.o: /usr/include/stdio.h
-./Componentes/SistemaEntrada/SistemaEntrada.o: /usr/include/stdio.h
-./Componentes/SistemaEntrada/SistemaEntrada.o: /usr/include/stdlib.h
-./Componentes/SistemaEntrada/SistemaEntrada.o: ./Componentes/SistemaEntrada/SistemaEntrada.h
-./Componentes/SistemaEntrada/SistemaEntrada.o: /usr/include/string.h
-./Componentes/SistemaEntrada/SistemaEntrada.o: /usr/include/math.h
-./Componentes/SistemaEntrada/SistemaEntrada.o: ./ArchivosComunes/Errores/Errores.h
 ./Componentes/TablaSimbolos/TablaSimbolos.o: ./Componentes/TablaSimbolos/TablaSimbolos.h
 ./Componentes/TablaSimbolos/TablaSimbolos.o: ./ArchivosComunes/TuplaLexemaId/TuplaLexemaId.h
 ./Componentes/TablaSimbolos/TablaSimbolos.o: ./Componentes/TablaSimbolos/ABBRojoNegro/ABBRojoNegro.h
@@ -96,8 +93,7 @@ all:
 ./Componentes/TablaSimbolos/ABBRojoNegro/ABBRojoNegro.o: /usr/include/stdio.h
 ./Componentes/TablaSimbolos/ABBRojoNegro/ABBRojoNegro.o: /usr/include/stdlib.h
 ./Componentes/TablaSimbolos/ABBRojoNegro/ABBRojoNegro.o: /usr/include/string.h
-./Main/Main.o: ./Componentes/SistemaEntrada/SistemaEntrada.h
 ./Main/Main.o: ./Componentes/TablaSimbolos/TablaSimbolos.h
 ./Main/Main.o: ./ArchivosComunes/TuplaLexemaId/TuplaLexemaId.h
-./Main/Main.o: ./Componentes/AnalizadorLexico/AnalizadorLexico.h
 ./Main/Main.o: ./Componentes/AnalizadorSintactico/AnalizadorSintactico.h
+./Main/Main.o: ./Componentes/FLEX/Flex.h

@@ -10,6 +10,8 @@
 
 * **Version del comando `gcc`**: gcc (Ubuntu 9.3.0-17ubuntu1~20.04) 9.3.0
 
+* **Version del comando `flex`**: flex 2.6.4
+
 ## Instrucciones para la compilación y ejecución
 
 1. Si no se hubiera hecho, se descomprime el archivo .zip.

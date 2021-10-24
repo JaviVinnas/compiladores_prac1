@@ -18,7 +18,7 @@
 
 2. Para compilar el código situarse en la carpeta **donde está este documento** (y el Makefile) en una terminal linux (bash, zsh...)
 
-3. Ejecutar el comando `make` para generar un archivo compilado llamado `ejecutable`
+3. Ejecutar el comando `make all` para generar un archivo compilado llamado `ejecutable`
 
 4. Damos los permisos a la ejecución al archivo ejecutable con el comando `chmod 777 ./ejecutable`
 

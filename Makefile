@@ -47,10 +47,8 @@ depend:
 	makedepend $(CFLAGS) $(FUENTES)
 
 all:
-	$(MAKE) depend
 	$(MAKE) build_flex
 	$(MAKE) ejecutable
-
 
 
 #----------------------------------------------------------------------------------------------------------------------

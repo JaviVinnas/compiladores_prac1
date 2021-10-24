@@ -44,6 +44,6 @@ void printTupla(TuplaLexemaId T)
 
 void destruirTupla(TuplaLexemaId T)
 {
-    free(T->lexema);
+    //free(T->lexema);
     free(T);
 }

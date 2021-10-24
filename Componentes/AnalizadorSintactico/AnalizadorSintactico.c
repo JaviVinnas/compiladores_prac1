@@ -14,8 +14,8 @@ void obtenerComponentesLexicos(Flex flex, TablaSimbolos tabla)
         printTupla(tupla);
         if (getTuplaId(tupla) == END_OF_FILE)
             break;
-        //if (getTuplaId(tupla) < 300 || getTuplaId(tupla) > 334)// si no es una palabra reservada o un identificador (que puede estar en la tabla de símbolos) lo borramos
-            //destruirTupla(tupla);
+        if (getTuplaId(tupla) < 300 || getTuplaId(tupla) > 334)// si no es una palabra reservada o un identificador (que puede estar en la tabla de símbolos) lo borramos
+            destruirTupla(tupla);
     }
     printSeparator();
 }

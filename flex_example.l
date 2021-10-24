@@ -5,12 +5,17 @@
 %}
 /*Definimos comentarios monolinea*/
 
-COMMENT "#"[^\n]*\n
+COMMENT "#"[^\n]*
 
 /*Definimos caracteres de utilidad*/
 
-/*TODO:definir cosas como ** == o cosas así*/
-CHARS   "+"|"-"|"*"|"/"|"."|"="|"{"|"}"|"("|")"|"["|"]"|"<"|">"|"^"|"!"|"%"|"&"|"|"|"~"|"@"|":"|","|"\n"
+RETORNO_DE_CARRO    \n
+
+MAS_IGUAL   +=
+MENOR_IGUAL <=
+EXPONENTIAL_OPERATOR    \*\*
+DOUBLE_EQUAL    ==
+SIMBOLO "+"|"-"|"*"|"/"|"."|"="|"{"|"}"|"("|")"|"["|"]"|"<"|">"|"^"|"!"|"%"|"&"|"|"|"~"|"@"|":"|","
 
 /*Definimos tabulaciones*/
 TAB [ ]{4}
@@ -40,14 +45,29 @@ DOCSTRING   (\"{3}([^\\\"]|\\.)*\"{3})|(\'{3}([^\\\']|\\.)*\'{3})
 STRING_LITERAL  (\"([^\\\"]|\\.)*\")|(\'([^\\\']|\\.)*\')
 
 
-
-
 /*Definimos lo equivalente a identificadores*/
 DUNDER_NAME \_\_([[:alnum:]]|_)*\_\_
 IDENTIFICADOR  [[:alpha:]]([[:alnum:]]|_)*
 
 
 %%
+
+{MAS_IGUAL} {
+    printf( "Un MAS_IGUAL: %s\n", yytext);
+}
+
+{MENOR_IGUAL} {
+    printf( "Un MENOR_IGUAL: %s\n", yytext);
+}
+
+{EXPONENTIAL_OPERATOR}  {
+    printf( "Un EXPONENTIAL_OPERATOR: %s\n", yytext);
+}
+
+{DOUBLE_EQUAL}  {
+    printf( "Un DOUBLE_EQUAL: %s\n", yytext);
+}
+
 
 
 {INTEGER}   {
@@ -67,17 +87,24 @@ IDENTIFICADOR  [[:alpha:]]([[:alnum:]]|_)*
 }
 
 {IDENTIFICADOR}  {
-    printf( "Un identificador literal: %s\n", yytext);
+    printf( "Un identificador: %s\n", yytext);
 }
 
 {DUNDER_NAME}  {
     printf( "Un dunder name: %s\n", yytext);
 }
 
+{RETORNO_DE_CARRO}  {
+    printf( "Un RETORNO_DE_CARRO: (No se pone)\n");
+}
 
 
-{CHARS} printf( "Un símbolo: %s\n", yytext );
+
+{SIMBOLO}   {
+    printf( "Un símbolo: %s\n", yytext );
+}
 {COMMENT}   printf( "Un comentario: %s\n", yytext );
+
 {TAB} printf( "Un tab: %s\n", yytext );
 {SPACES}    /* se come los espacios en blanco */
 .   printf( "Caracter no reconocido: %s\n", yytext );

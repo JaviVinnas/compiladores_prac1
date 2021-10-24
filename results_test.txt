@@ -1,30 +1,24 @@
 Un comentario: # -*- coding: utf-8 -*-
-
+Un RETORNO_DE_CARRO: (No se pone)
 Un DOCSTRING: """
 Created on Tue Sep 15 12:16:21 2015
 """
-Un símbolo: 
-
-Un símbolo: 
-
+Un RETORNO_DE_CARRO: (No se pone)
+Un RETORNO_DE_CARRO: (No se pone)
 Un identificador literal: import
 Un identificador literal: scipy
 Un símbolo: .
 Un identificador literal: stats
 Un identificador literal: as
 Un identificador literal: st
-Un símbolo: 
-
+Un RETORNO_DE_CARRO: (No se pone)
 Un identificador literal: import
 Un identificador literal: math
-Un símbolo: 
-
+Un RETORNO_DE_CARRO: (No se pone)
 Un identificador literal: import
 Un identificador literal: random
-Un símbolo: 
-
-Un símbolo: 
-
+Un RETORNO_DE_CARRO: (No se pone)
+Un RETORNO_DE_CARRO: (No se pone)
 Un identificador literal: wilcoxon_table
 Un símbolo: =
 Un símbolo: {
@@ -60,8 +54,7 @@ Un símbolo: :
 Un integer: 14
 Un símbolo: }
 Un símbolo: ,
-Un símbolo: 
-
+Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
 Un tab:     
 Un tab:     
@@ -82,10 +75,8 @@ Un símbolo: :
 Un integer: 3
 Un símbolo: }
 Un símbolo: }
-Un símbolo: 
-
-Un símbolo: 
-
+Un RETORNO_DE_CARRO: (No se pone)
+Un RETORNO_DE_CARRO: (No se pone)
 Un identificador literal: def
 Un identificador literal: wilcoxon_test
 Un símbolo: (
@@ -98,14 +89,12 @@ Un símbolo: =
 Un FLOAT_NUMBER: .05
 Un símbolo: )
 Un símbolo: :
-Un símbolo: 
-
+Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
 Un DOCSTRING: """
     Performs the Wilcoxon Rank non-parametric test for two algorithms.
     """
-Un símbolo: 
-
+Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
 Un identificador literal: N
 Un símbolo: =
@@ -114,10 +103,10 @@ Un símbolo: (
 Un identificador literal: a
 Un símbolo: )
 Un comentario: # Number of datasets
-
+Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
 Un comentario: # Compute the differences and keep the signs
-
+Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
 Un identificador literal: differences
 Un símbolo: ,
@@ -146,8 +135,7 @@ Un identificador literal: N
 Un símbolo: )
 Un símbolo: ]
 Un símbolo: ,
-Un símbolo: 
-
+Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
 Un tab:     
 Un tab:     
@@ -173,8 +161,7 @@ Un identificador literal: N
 Un símbolo: )
 Un símbolo: ]
 Un símbolo: )
-Un símbolo: 
-
+Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
 Un identificador literal: tmp
 Un símbolo: =
@@ -182,17 +169,16 @@ Un identificador literal: sorted
 Un símbolo: (
 Un identificador literal: differences
 Un símbolo: )
-Un símbolo: 
-
+Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
 Un comentario: # The rank is the median between the index of the first element equal
-
+Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
 Un comentario: # to v in tmp (index(v)+1) and the index of the last element equal to v
-
+Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
 Un comentario: # (index(v)+count(v))
-
+Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
 Un identificador literal: ranks
 Un símbolo: =
@@ -223,19 +209,17 @@ Un identificador literal: v
 Un identificador literal: in
 Un identificador literal: differences
 Un símbolo: ]
-Un símbolo: 
-
+Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
 Un comentario: # Add up the ranks for positive and negative signs
-
+Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
 Un identificador literal: r_plus
 Un símbolo: =
 Un identificador literal: r_minus
 Un símbolo: =
 Un FLOAT_NUMBER: 0.0
-Un símbolo: 
-
+Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
 Un identificador literal: for
 Un identificador literal: i
@@ -245,8 +229,7 @@ Un símbolo: (
 Un identificador literal: N
 Un símbolo: )
 Un símbolo: :
-Un símbolo: 
-
+Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
 Un tab:     
 Un identificador literal: if
@@ -257,8 +240,7 @@ Un símbolo: ]
 Un símbolo: <
 Un integer: 0
 Un símbolo: :
-Un símbolo: 
-
+Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
 Un tab:     
 Un tab:     
@@ -269,8 +251,7 @@ Un identificador literal: ranks
 Un símbolo: [
 Un identificador literal: i
 Un símbolo: ]
-Un símbolo: 
-
+Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
 Un tab:     
 Un identificador literal: elif
@@ -281,8 +262,7 @@ Un símbolo: ]
 Un símbolo: >
 Un integer: 0
 Un símbolo: :
-Un símbolo: 
-
+Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
 Un tab:     
 Un tab:     
@@ -293,14 +273,12 @@ Un identificador literal: ranks
 Un símbolo: [
 Un identificador literal: i
 Un símbolo: ]
-Un símbolo: 
-
+Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
 Un tab:     
 Un identificador literal: else
 Un símbolo: :
-Un símbolo: 
-
+Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
 Un tab:     
 Un tab:     
@@ -317,8 +295,7 @@ Un símbolo: *
 Un símbolo: *
 Un símbolo: -
 Un integer: 1
-Un símbolo: 
-
+Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
 Un tab:     
 Un tab:     
@@ -331,11 +308,10 @@ Un identificador literal: i
 Un símbolo: ]
 Un símbolo: /
 Un FLOAT_NUMBER: 2.
-Un símbolo: 
-
+Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
 Un comentario: # Compute the minimum of both sums
-
+Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
 Un identificador literal: T
 Un símbolo: =
@@ -347,11 +323,10 @@ Un símbolo: ,
 Un identificador literal: r_minus
 Un símbolo: ]
 Un símbolo: )
-Un símbolo: 
-
+Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
 Un comentario: # Check if it can be approximated by a gaussian distribution
-
+Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
 Un identificador literal: if
 Un identificador literal: N
@@ -359,8 +334,7 @@ Un símbolo: <
 Un símbolo: =
 Un integer: 30
 Un símbolo: :
-Un símbolo: 
-
+Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
 Un tab:     
 Un identificador literal: return
@@ -377,8 +351,7 @@ Un símbolo: [
 Un identificador literal: N
 Un símbolo: ]
 Un símbolo: ,
-Un símbolo: 
-
+Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
 Un tab:     
 Un tab:     
@@ -387,8 +360,7 @@ Un string literal: "statistic"
 Un símbolo: :
 Un identificador literal: T
 Un símbolo: ,
-Un símbolo: 
-
+Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
 Un tab:     
 Un tab:     
@@ -403,13 +375,11 @@ Un símbolo: [
 Un identificador literal: N
 Un símbolo: ]
 Un símbolo: }
-Un símbolo: 
-
+Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
 Un identificador literal: else
 Un símbolo: :
-Un símbolo: 
-
+Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
 Un tab:     
 Un identificador literal: z
@@ -450,8 +420,7 @@ Un símbolo: )
 Un símbolo: /
 Un integer: 24
 Un símbolo: )
-Un símbolo: 
-
+Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
 Un tab:     
 Un identificador literal: return
@@ -469,8 +438,7 @@ Un integer: 2
 Un símbolo: >
 Un identificador literal: alpha
 Un símbolo: ,
-Un símbolo: 
-
+Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
 Un tab:     
 Un tab:     
@@ -479,8 +447,7 @@ Un string literal: "statistic"
 Un símbolo: :
 Un identificador literal: z
 Un símbolo: ,
-Un símbolo: 
-
+Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
 Un tab:     
 Un tab:     
@@ -494,24 +461,20 @@ Un símbolo: (
 Un identificador literal: z
 Un símbolo: )
 Un símbolo: }
-Un símbolo: 
-
-Un símbolo: 
-
+Un RETORNO_DE_CARRO: (No se pone)
+Un RETORNO_DE_CARRO: (No se pone)
 Un identificador literal: if
 Un dunder name: __name__
 Un símbolo: =
 Un símbolo: =
 Un string literal: '__main__'
 Un símbolo: :
-Un símbolo: 
-
+Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
 Un identificador literal: N
 Un símbolo: =
 Un integer: 12
-Un símbolo: 
-
+Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
 Un identificador literal: a
 Un símbolo: =
@@ -536,8 +499,7 @@ Un símbolo: (
 Un identificador literal: N
 Un símbolo: )
 Un símbolo: ]
-Un símbolo: 
-
+Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
 Un identificador literal: b
 Un símbolo: =
@@ -562,8 +524,7 @@ Un símbolo: (
 Un identificador literal: N
 Un símbolo: )
 Un símbolo: ]
-Un símbolo: 
-
+Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
 Un identificador literal: if
 Un identificador literal: not
@@ -577,8 +538,7 @@ Un símbolo: [
 Un string literal: 'result'
 Un símbolo: ]
 Un símbolo: :
-Un símbolo: 
-
+Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
 Un tab:     
 Un identificador literal: print

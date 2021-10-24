@@ -5,21 +5,21 @@ Created on Tue Sep 15 12:16:21 2015
 """
 Un RETORNO_DE_CARRO: (No se pone)
 Un RETORNO_DE_CARRO: (No se pone)
-Un identificador literal: import
-Un identificador literal: scipy
+Un identificador: import
+Un identificador: scipy
 Un símbolo: .
-Un identificador literal: stats
-Un identificador literal: as
-Un identificador literal: st
+Un identificador: stats
+Un identificador: as
+Un identificador: st
 Un RETORNO_DE_CARRO: (No se pone)
-Un identificador literal: import
-Un identificador literal: math
+Un identificador: import
+Un identificador: math
 Un RETORNO_DE_CARRO: (No se pone)
-Un identificador literal: import
-Un identificador literal: random
+Un identificador: import
+Un identificador: random
 Un RETORNO_DE_CARRO: (No se pone)
 Un RETORNO_DE_CARRO: (No se pone)
-Un identificador literal: wilcoxon_table
+Un identificador: wilcoxon_table
 Un símbolo: =
 Un símbolo: {
 Un FLOAT_NUMBER: 5e-2
@@ -77,14 +77,14 @@ Un símbolo: }
 Un símbolo: }
 Un RETORNO_DE_CARRO: (No se pone)
 Un RETORNO_DE_CARRO: (No se pone)
-Un identificador literal: def
-Un identificador literal: wilcoxon_test
+Un identificador: def
+Un identificador: wilcoxon_test
 Un símbolo: (
-Un identificador literal: a
+Un identificador: a
 Un símbolo: ,
-Un identificador literal: b
+Un identificador: b
 Un símbolo: ,
-Un identificador literal: alpha
+Un identificador: alpha
 Un símbolo: =
 Un FLOAT_NUMBER: .05
 Un símbolo: )
@@ -96,11 +96,11 @@ Un DOCSTRING: """
     """
 Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
-Un identificador literal: N
+Un identificador: N
 Un símbolo: =
-Un identificador literal: len
+Un identificador: len
 Un símbolo: (
-Un identificador literal: a
+Un identificador: a
 Un símbolo: )
 Un comentario: # Number of datasets
 Un RETORNO_DE_CARRO: (No se pone)
@@ -108,30 +108,30 @@ Un tab:
 Un comentario: # Compute the differences and keep the signs
 Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
-Un identificador literal: differences
+Un identificador: differences
 Un símbolo: ,
-Un identificador literal: signs
+Un identificador: signs
 Un símbolo: =
 Un símbolo: (
 Un símbolo: [
-Un identificador literal: abs
+Un identificador: abs
 Un símbolo: (
-Un identificador literal: a
+Un identificador: a
 Un símbolo: [
-Un identificador literal: i
+Un identificador: i
 Un símbolo: ]
 Un símbolo: -
-Un identificador literal: b
+Un identificador: b
 Un símbolo: [
-Un identificador literal: i
+Un identificador: i
 Un símbolo: ]
 Un símbolo: )
-Un identificador literal: for
-Un identificador literal: i
-Un identificador literal: in
-Un identificador literal: xrange
+Un identificador: for
+Un identificador: i
+Un identificador: in
+Un identificador: xrange
 Un símbolo: (
-Un identificador literal: N
+Un identificador: N
 Un símbolo: )
 Un símbolo: ]
 Un símbolo: ,
@@ -143,31 +143,31 @@ Un tab:
 Un tab:     
 Un tab:     
 Un símbolo: [
-Un identificador literal: a
+Un identificador: a
 Un símbolo: [
-Un identificador literal: i
+Un identificador: i
 Un símbolo: ]
 Un símbolo: -
-Un identificador literal: b
+Un identificador: b
 Un símbolo: [
-Un identificador literal: i
+Un identificador: i
 Un símbolo: ]
-Un identificador literal: for
-Un identificador literal: i
-Un identificador literal: in
-Un identificador literal: xrange
+Un identificador: for
+Un identificador: i
+Un identificador: in
+Un identificador: xrange
 Un símbolo: (
-Un identificador literal: N
+Un identificador: N
 Un símbolo: )
 Un símbolo: ]
 Un símbolo: )
 Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
-Un identificador literal: tmp
+Un identificador: tmp
 Un símbolo: =
-Un identificador literal: sorted
+Un identificador: sorted
 Un símbolo: (
-Un identificador literal: differences
+Un identificador: differences
 Un símbolo: )
 Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
@@ -180,22 +180,22 @@ Un tab:
 Un comentario: # (index(v)+count(v))
 Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
-Un identificador literal: ranks
+Un identificador: ranks
 Un símbolo: =
 Un símbolo: [
 Un símbolo: (
-Un identificador literal: tmp
+Un identificador: tmp
 Un símbolo: .
-Un identificador literal: count
+Un identificador: count
 Un símbolo: (
-Un identificador literal: v
+Un identificador: v
 Un símbolo: )
 Un símbolo: +
-Un identificador literal: tmp
+Un identificador: tmp
 Un símbolo: .
-Un identificador literal: index
+Un identificador: index
 Un símbolo: (
-Un identificador literal: v
+Un identificador: v
 Un símbolo: )
 Un símbolo: *
 Un integer: 2
@@ -204,38 +204,38 @@ Un integer: 0x1
 Un símbolo: )
 Un símbolo: /
 Un FLOAT_NUMBER: 2e0
-Un identificador literal: for
-Un identificador literal: v
-Un identificador literal: in
-Un identificador literal: differences
+Un identificador: for
+Un identificador: v
+Un identificador: in
+Un identificador: differences
 Un símbolo: ]
 Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
 Un comentario: # Add up the ranks for positive and negative signs
 Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
-Un identificador literal: r_plus
+Un identificador: r_plus
 Un símbolo: =
-Un identificador literal: r_minus
+Un identificador: r_minus
 Un símbolo: =
 Un FLOAT_NUMBER: 0.0
 Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
-Un identificador literal: for
-Un identificador literal: i
-Un identificador literal: in
-Un identificador literal: xrange
+Un identificador: for
+Un identificador: i
+Un identificador: in
+Un identificador: xrange
 Un símbolo: (
-Un identificador literal: N
+Un identificador: N
 Un símbolo: )
 Un símbolo: :
 Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
 Un tab:     
-Un identificador literal: if
-Un identificador literal: signs
+Un identificador: if
+Un identificador: signs
 Un símbolo: [
-Un identificador literal: i
+Un identificador: i
 Un símbolo: ]
 Un símbolo: <
 Un integer: 0
@@ -244,20 +244,19 @@ Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
 Un tab:     
 Un tab:     
-Un identificador literal: r_minus
-Un símbolo: +
-Un símbolo: =
-Un identificador literal: ranks
+Un identificador: r_minus
+Un MAS_IGUAL: +=
+Un identificador: ranks
 Un símbolo: [
-Un identificador literal: i
+Un identificador: i
 Un símbolo: ]
 Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
 Un tab:     
-Un identificador literal: elif
-Un identificador literal: signs
+Un identificador: elif
+Un identificador: signs
 Un símbolo: [
-Un identificador literal: i
+Un identificador: i
 Un símbolo: ]
 Un símbolo: >
 Un integer: 0
@@ -266,45 +265,41 @@ Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
 Un tab:     
 Un tab:     
-Un identificador literal: r_plus
-Un símbolo: +
-Un símbolo: =
-Un identificador literal: ranks
+Un identificador: r_plus
+Un MAS_IGUAL: +=
+Un identificador: ranks
 Un símbolo: [
-Un identificador literal: i
+Un identificador: i
 Un símbolo: ]
 Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
 Un tab:     
-Un identificador literal: else
+Un identificador: else
 Un símbolo: :
 Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
 Un tab:     
 Un tab:     
-Un identificador literal: r_minus
-Un símbolo: +
-Un símbolo: =
-Un identificador literal: ranks
+Un identificador: r_minus
+Un MAS_IGUAL: +=
+Un identificador: ranks
 Un símbolo: [
-Un identificador literal: i
+Un identificador: i
 Un símbolo: ]
 Un símbolo: *
 Un integer: 2
-Un símbolo: *
-Un símbolo: *
+Un EXPONENTIAL_OPERATOR: **
 Un símbolo: -
 Un integer: 1
 Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
 Un tab:     
 Un tab:     
-Un identificador literal: r_plus
-Un símbolo: +
-Un símbolo: =
-Un identificador literal: ranks
+Un identificador: r_plus
+Un MAS_IGUAL: +=
+Un identificador: ranks
 Un símbolo: [
-Un identificador literal: i
+Un identificador: i
 Un símbolo: ]
 Un símbolo: /
 Un FLOAT_NUMBER: 2.
@@ -313,14 +308,14 @@ Un tab:
 Un comentario: # Compute the minimum of both sums
 Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
-Un identificador literal: T
+Un identificador: T
 Un símbolo: =
-Un identificador literal: min
+Un identificador: min
 Un símbolo: (
 Un símbolo: [
-Un identificador literal: r_plus
+Un identificador: r_plus
 Un símbolo: ,
-Un identificador literal: r_minus
+Un identificador: r_minus
 Un símbolo: ]
 Un símbolo: )
 Un RETORNO_DE_CARRO: (No se pone)
@@ -328,27 +323,26 @@ Un tab:
 Un comentario: # Check if it can be approximated by a gaussian distribution
 Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
-Un identificador literal: if
-Un identificador literal: N
-Un símbolo: <
-Un símbolo: =
+Un identificador: if
+Un identificador: N
+Un MENOR_IGUAL: <=
 Un integer: 30
 Un símbolo: :
 Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
 Un tab:     
-Un identificador literal: return
+Un identificador: return
 Un símbolo: {
 Un string literal: "result"
 Un símbolo: :
-Un identificador literal: T
+Un identificador: T
 Un símbolo: >
-Un identificador literal: wilcoxon_table
+Un identificador: wilcoxon_table
 Un símbolo: [
-Un identificador literal: alpha
+Un identificador: alpha
 Un símbolo: ]
 Un símbolo: [
-Un identificador literal: N
+Un identificador: N
 Un símbolo: ]
 Un símbolo: ,
 Un RETORNO_DE_CARRO: (No se pone)
@@ -358,7 +352,7 @@ Un tab:
 Un tab:     
 Un string literal: "statistic"
 Un símbolo: :
-Un identificador literal: T
+Un identificador: T
 Un símbolo: ,
 Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
@@ -367,30 +361,30 @@ Un tab:
 Un tab:     
 Un string literal: "critical"
 Un símbolo: :
-Un identificador literal: wilcoxon_table
+Un identificador: wilcoxon_table
 Un símbolo: [
-Un identificador literal: alpha
+Un identificador: alpha
 Un símbolo: ]
 Un símbolo: [
-Un identificador literal: N
+Un identificador: N
 Un símbolo: ]
 Un símbolo: }
 Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
-Un identificador literal: else
+Un identificador: else
 Un símbolo: :
 Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
 Un tab:     
-Un identificador literal: z
+Un identificador: z
 Un símbolo: =
 Un símbolo: (
-Un identificador literal: T
+Un identificador: T
 Un símbolo: -
-Un identificador literal: N
+Un identificador: N
 Un símbolo: *
 Un símbolo: (
-Un identificador literal: N
+Un identificador: N
 Un símbolo: +
 Un integer: 1
 Un símbolo: )
@@ -398,14 +392,14 @@ Un símbolo: /
 Un integer: 4
 Un símbolo: )
 Un símbolo: /
-Un identificador literal: math
+Un identificador: math
 Un símbolo: .
-Un identificador literal: sqrt
+Un identificador: sqrt
 Un símbolo: (
-Un identificador literal: N
+Un identificador: N
 Un símbolo: *
 Un símbolo: (
-Un identificador literal: N
+Un identificador: N
 Un símbolo: +
 Un integer: 1
 Un símbolo: )
@@ -413,7 +407,7 @@ Un símbolo: *
 Un símbolo: (
 Un integer: 2
 Un símbolo: *
-Un identificador literal: N
+Un identificador: N
 Un símbolo: +
 Un integer: 1
 Un símbolo: )
@@ -423,20 +417,20 @@ Un símbolo: )
 Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
 Un tab:     
-Un identificador literal: return
+Un identificador: return
 Un símbolo: {
 Un string literal: "result"
 Un símbolo: :
-Un identificador literal: st
+Un identificador: st
 Un símbolo: .
-Un identificador literal: zprob
+Un identificador: zprob
 Un símbolo: (
-Un identificador literal: z
+Un identificador: z
 Un símbolo: )
 Un símbolo: *
 Un integer: 2
 Un símbolo: >
-Un identificador literal: alpha
+Un identificador: alpha
 Un símbolo: ,
 Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
@@ -445,7 +439,7 @@ Un tab:
 Un tab:     
 Un string literal: "statistic"
 Un símbolo: :
-Un identificador literal: z
+Un identificador: z
 Un símbolo: ,
 Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
@@ -454,34 +448,33 @@ Un tab:
 Un tab:     
 Un string literal: "critical"
 Un símbolo: :
-Un identificador literal: st
+Un identificador: st
 Un símbolo: .
-Un identificador literal: zprob
+Un identificador: zprob
 Un símbolo: (
-Un identificador literal: z
+Un identificador: z
 Un símbolo: )
 Un símbolo: }
 Un RETORNO_DE_CARRO: (No se pone)
 Un RETORNO_DE_CARRO: (No se pone)
-Un identificador literal: if
+Un identificador: if
 Un dunder name: __name__
-Un símbolo: =
-Un símbolo: =
+Un DOUBLE_EQUAL: ==
 Un string literal: '__main__'
 Un símbolo: :
 Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
-Un identificador literal: N
+Un identificador: N
 Un símbolo: =
 Un integer: 12
 Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
-Un identificador literal: a
+Un identificador: a
 Un símbolo: =
 Un símbolo: [
-Un identificador literal: random
+Un identificador: random
 Un símbolo: .
-Un identificador literal: randrange
+Un identificador: randrange
 Un símbolo: (
 Un integer: 75
 Un símbolo: ,
@@ -491,22 +484,22 @@ Un integer: 1
 Un símbolo: )
 Un símbolo: /
 Un FLOAT_NUMBER: 1e2
-Un identificador literal: for
-Un identificador literal: i
-Un identificador literal: in
-Un identificador literal: xrange
+Un identificador: for
+Un identificador: i
+Un identificador: in
+Un identificador: xrange
 Un símbolo: (
-Un identificador literal: N
+Un identificador: N
 Un símbolo: )
 Un símbolo: ]
 Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
-Un identificador literal: b
+Un identificador: b
 Un símbolo: =
 Un símbolo: [
-Un identificador literal: random
+Un identificador: random
 Un símbolo: .
-Un identificador literal: randrange
+Un identificador: randrange
 Un símbolo: (
 Un integer: 75
 Un símbolo: ,
@@ -516,23 +509,23 @@ Un integer: 1
 Un símbolo: )
 Un símbolo: /
 Un FLOAT_NUMBER: 1e2
-Un identificador literal: for
-Un identificador literal: i
-Un identificador literal: in
-Un identificador literal: xrange
+Un identificador: for
+Un identificador: i
+Un identificador: in
+Un identificador: xrange
 Un símbolo: (
-Un identificador literal: N
+Un identificador: N
 Un símbolo: )
 Un símbolo: ]
 Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
-Un identificador literal: if
-Un identificador literal: not
-Un identificador literal: wilcoxon_test
+Un identificador: if
+Un identificador: not
+Un identificador: wilcoxon_test
 Un símbolo: (
-Un identificador literal: a
+Un identificador: a
 Un símbolo: ,
-Un identificador literal: b
+Un identificador: b
 Un símbolo: )
 Un símbolo: [
 Un string literal: 'result'
@@ -541,5 +534,5 @@ Un símbolo: :
 Un RETORNO_DE_CARRO: (No se pone)
 Un tab:     
 Un tab:     
-Un identificador literal: print
+Un identificador: print
 Un string literal: 'Result differences are "statistically significant"'
